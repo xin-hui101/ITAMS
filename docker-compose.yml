@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  # Backend — ASP.NET Core
+  backend:
+    build:
+      context: ./ITAMS_GME_BACKEND
+      dockerfile: Dockerfile
+    container_name: itams-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION}
+      - JwtSettings__SecretKey=${JWT_SECRET}
+      - JwtSettings__Issuer=${JWT_ISSUER}
+      - JwtSettings__Audience=${JWT_AUDIENCE}
+      - JwtSettings__ExpireHours=${JWT_EXPIRE_HOURS}
+    networks:
+      - itams-network
+
+  # Frontend — React + Nginx
+  frontend:
+    build:
+      context: ./ITAMS_GME
+      dockerfile: Dockerfile
+    container_name: itams-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - itams-network
+
+networks:
+  itams-network:
+    driver: bridge
