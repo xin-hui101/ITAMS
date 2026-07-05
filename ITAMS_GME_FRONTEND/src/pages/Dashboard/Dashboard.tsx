@@ -107,7 +107,7 @@ export default function Dashboard() {
       <div className="db-kpi-grid">
         {assets && (
           <>
-            <div className="db-kpi-card" onClick={() => navigate('/assets')} style={{ cursor: 'pointer' }}>
+            <div className="db-kpi-card" onClick={() => navigate('/am')} style={{ cursor: 'pointer' }}>
               <div className="db-kpi-icon" style={{ color: '#1565c0' }}>
                 <i className="ti ti-devices" />
               </div>
@@ -128,7 +128,7 @@ export default function Dashboard() {
           </>
         )}
         {categories && (
-          <div className="db-kpi-card" onClick={() => navigate('/categories')} style={{ cursor: 'pointer' }}>
+          <div className="db-kpi-card" onClick={() => navigate('/cm')} style={{ cursor: 'pointer' }}>
             <div className="db-kpi-icon" style={{ color: '#f57f17' }}>
               <i className="ti ti-category" />
             </div>
@@ -139,7 +139,7 @@ export default function Dashboard() {
           </div>
         )}
         {maintenance && (
-          <div className="db-kpi-card" onClick={() => navigate('/maintenance')} style={{ cursor: 'pointer' }}>
+          <div className="db-kpi-card" onClick={() => navigate('/mn')} style={{ cursor: 'pointer' }}>
             <div className="db-kpi-icon" style={{ color: '#c62828' }}>
               <i className="ti ti-tool" />
             </div>
@@ -150,7 +150,7 @@ export default function Dashboard() {
           </div>
         )}
         {auditLog && (
-          <div className="db-kpi-card" onClick={() => navigate('/audit-logs')} style={{ cursor: 'pointer' }}>
+          <div className="db-kpi-card" onClick={() => navigate('/al')} style={{ cursor: 'pointer' }}>
             <div className="db-kpi-icon" style={{ color: '#6a1b9a' }}>
               <i className="ti ti-clipboard-list" />
             </div>
@@ -302,7 +302,7 @@ export default function Dashboard() {
                     key={alert.id}
                     className="db-warranty-item"
                     style={{ background: clr.bg, borderLeftColor: clr.border }}
-                    onClick={() => navigate('/assets')}
+                    onClick={() => navigate('/am')}
                   >
                     <div>
                       <div className="db-warranty-tag" style={{ color: clr.text }}>

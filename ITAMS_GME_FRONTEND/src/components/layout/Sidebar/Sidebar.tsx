@@ -29,10 +29,10 @@ useEffect(() => {
 }, [refreshKey]);
 
   useEffect(() => {
-    if (location.pathname.startsWith('/assets')) setAssetOpen(true);
+    if (location.pathname.startsWith('/am')) setAssetOpen(true);
   }, [location.pathname]);
 
-  const isAssetActive = location.pathname.startsWith('/assets');
+  const isAssetActive = location.pathname.startsWith('/am');
 
   function handleToggle() {
     const next = !collapsed;
@@ -77,7 +77,7 @@ useEffect(() => {
 
         {/* Dashboard — always visible */}
         <NavLink
-          to="/dashboard"
+          to="/db"
           className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
         >
           <i className="ti ti-layout-dashboard" aria-hidden="true" />
@@ -87,7 +87,7 @@ useEffect(() => {
         {/* User Management — Users:Read */}
         {hasPermission('Users', 'Read') && (
           <NavLink
-            to="/users"
+            to="/um"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <i className="ti ti-users" aria-hidden="true" />
@@ -114,7 +114,7 @@ useEffect(() => {
             {!collapsed && (
               <div className={`sidebar-dropdown ${assetOpen ? 'open' : ''}`}>
                 <NavLink
-                  to="/assets"
+                  to="/am"
                   end
                   className={({ isActive }) =>
                     `sidebar-dropdown-item ${isActive && !location.search ? 'active' : ''}`
@@ -126,7 +126,7 @@ useEffect(() => {
                 {categories.map(cat => (
   <NavLink
     key={cat.id}
-    to={`/assets?categoryId=${cat.id}`}
+    to={`/am?categoryId=${cat.id}`}
     className={() =>
       `sidebar-dropdown-item ${
         location.search === `?categoryId=${cat.id}` ? 'active' : ''
@@ -145,7 +145,7 @@ useEffect(() => {
         {/* Maintenance — Maintenance:Read */}
         {hasPermission('Maintenance', 'Read') && (
           <NavLink
-            to="/maintenance"
+            to="/mn"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <i className="ti ti-tool" aria-hidden="true" />
@@ -156,7 +156,7 @@ useEffect(() => {
         {/* Categories — Categories:Read */}
         {hasPermission('Categories', 'Read') && (
           <NavLink
-            to="/categories"
+            to="/cm"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <i className="ti ti-category" aria-hidden="true" />
@@ -167,7 +167,7 @@ useEffect(() => {
         {/* Audit Log — AuditLogs:Read */}
         {hasPermission('AuditLogs', 'Read') && (
           <NavLink
-            to="/audit-logs"
+            to="/al"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <i className="ti ti-clipboard-list" aria-hidden="true" />
