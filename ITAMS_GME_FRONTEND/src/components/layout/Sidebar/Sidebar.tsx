@@ -100,7 +100,7 @@ useEffect(() => {
           <div className="sidebar-nav-item-wrap">
             <div
               className={`sidebar-nav-item-row ${isAssetActive ? 'active' : ''}`}
-              onClick={() => collapsed ? navigate('/assets') : setAssetOpen(prev => !prev)}
+              onClick={() => collapsed ? navigate('/am') : setAssetOpen(prev => !prev)}
             >
               <div className="sidebar-nav-item-left">
                 <i className="ti ti-device-laptop" aria-hidden="true" />

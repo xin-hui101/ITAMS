@@ -29,7 +29,7 @@ function PermissionRoute({
   const { hasAnyPermission } = usePermission();
 
   if (!hasAnyPermission(module)) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/db" replace />;
   }
 
   return <>{children}</>;
