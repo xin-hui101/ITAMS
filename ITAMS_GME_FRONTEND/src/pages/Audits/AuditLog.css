@@ -1,0 +1,329 @@
+/* ─── Page Wrapper ────────────────────────────────────────────── */
+.al-page {
+  background: #fff;
+  padding: 10px;
+  min-height: 100%;
+}
+
+/* ─── KPI Cards ───────────────────────────────────────────────── */
+/* Matches the icon+value layout used on Asset Management/Maintenance */
+.al-kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.al-kpi-card {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  flex: 1 1 0;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.al-kpi-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.al-kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.al-kpi-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.al-kpi-label {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.al-kpi-total .al-kpi-icon  { color: #1565c0; }
+.al-kpi-create .al-kpi-icon { color: #2e7d32; }
+.al-kpi-update .al-kpi-icon { color: #f57f17; }
+.al-kpi-delete .al-kpi-icon { color: #c62828; }
+
+/* ─── Toolbar ─────────────────────────────────────────────────── */
+.al-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.al-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.al-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  font-size: 15px;
+  pointer-events: none;
+}
+.al-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1a1a1a;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.al-search-input:focus { border-color: #00bcd4; }
+.al-filter-select {
+  padding: 10px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  outline: none;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 130px;
+}
+.al-filter-select:focus { border-color: #00bcd4; }
+
+/* ─── Date Range ──────────────────────────────────────────────── */
+.al-date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.al-date-input {
+  padding: 9px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  outline: none;
+  background: #fff;
+  font-family: inherit;
+}
+.al-date-input:focus { border-color: #00bcd4; }
+.al-date-sep { font-size: 12px; color: #aaa; }
+
+/* ─── Table ───────────────────────────────────────────────────── */
+.al-table-wrap {
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.al-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.al-table thead { background: #fafafa; }
+.al-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+.al-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #f9f9f9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.al-table tr:last-child td { border-bottom: none; }
+.al-table tbody tr:hover td { background: #fafafa; }
+
+/* User cell */
+.al-user-name  { font-weight: 600; color: #1a1a1a; font-size: 13px; }
+.al-user-email { font-size: 11px; color: #888; }
+
+/* IP address */
+.al-ip {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  color: #555;
+}
+
+/* ─── Module Badges ───────────────────────────────────────────── */
+.al-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.al-badge-auth        { background: #e3f2fd; color: #1565c0; }
+.al-badge-users       { background: #e3f2fd; color: #1565c0; }
+.al-badge-categories  { background: rgba(245,197,24,0.15); color: #b8860b; border: 1px solid rgba(245,197,24,0.3); }
+.al-badge-assets      { background: #fff8e1; color: #f57f17; }
+.al-badge-maintenance { background: #e8f5e9; color: #2e7d32; }
+
+/* ─── Action Badges ───────────────────────────────────────────── */
+.al-badge-login  { background: #e8f5e9; color: #2e7d32; }
+.al-badge-create { background: #e8f5e9; color: #2e7d32; }
+.al-badge-update { background: #fff8e1; color: #f57f17; }
+.al-badge-delete { background: #fce4ec; color: #c62828; }
+
+/* ─── View Button ─────────────────────────────────────────────── */
+.al-btn-view {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background: #e3f2fd;
+  color: #1565c0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.al-btn-view:hover { opacity: 0.8; transform: translateY(-1px); }
+
+/* ─── Empty / Loading / Error ─────────────────────────────────── */
+.al-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: #bbb;
+}
+.al-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.al-empty-text { font-size: 14px; }
+.al-loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
+.al-error   { text-align: center; padding: 48px; color: #e74c3c; font-size: 14px; }
+
+/* ─── Pagination ──────────────────────────────────────────────── */
+.al-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.al-pagination-info { font-size: 12px; color: #888; }
+.al-pagination-btns { display: flex; gap: 4px; }
+.al-page-btn {
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.al-page-btn:hover { background: #f5f5f5; }
+.al-page-btn.active {
+  background: #f5c518;
+  color: #4a2f00;
+  border-color: #f5c518;
+  font-weight: 600;
+}
+.al-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ─── Print Button ────────────────────────────────────────────── */
+.al-btn-print {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5c518;
+  color: #4a2f00;
+  border: 1.5px solid #f5c518;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.al-btn-print:hover {
+  background: #fff;
+  color: #f5c518;
+  border-color: #f5c518;
+}
+.al-btn-print i { font-size: 15px; }
+
+/* ─── Print Styles ────────────────────────────────────────────── */
+@media print {
+  /* Hide everything except the audit log table */
+  body * { visibility: hidden; }
+
+  /* Show only the table and its children */
+  .al-table-wrap,
+  .al-table-wrap * { visibility: visible; }
+
+  /* Position the table to fill the page */
+  .al-table-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: none;
+  }
+
+  /* Print header — show report title and date */
+  .al-table-wrap::before {
+    content: "Audit Log Report — Printed on " attr(data-print-date);
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    visibility: visible;
+  }
+
+  /* Make table borders visible for printing */
+  .al-table th,
+  .al-table td {
+    border: 1px solid #ccc !important;
+    color: #000 !important;
+    background: #fff !important;
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+  }
+
+  .al-table thead {
+    background: #f0f0f0 !important;
+  }
+
+  /* Hide the view button column when printing */
+  .al-table th:last-child,
+  .al-table td:last-child { display: none; }
+}

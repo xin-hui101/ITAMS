@@ -1,0 +1,252 @@
+/* ─── Page Wrapper ────────────────────────────────────────────── */
+.db-page {
+  background: #fff;
+  padding: 10px;
+  min-height: 100%;
+}
+
+/* ─── Loading / Error ─────────────────────────────────────────── */
+.db-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px;
+  color: #888;
+  font-size: 14px;
+}
+.db-error {
+  text-align: center;
+  padding: 80px;
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+/* ─── KPI Cards ───────────────────────────────────────────────── */
+.db-kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.db-kpi-card {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  flex: 1 1 0;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.db-kpi-card[style*="cursor: pointer"]:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  transform: translateY(-1px);
+}
+.db-kpi-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.db-kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.db-kpi-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.db-kpi-label {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+}
+
+/* ─── Charts Grid ─────────────────────────────────────────────── */
+.db-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+/* ─── Card ────────────────────────────────────────────────────── */
+.db-card {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+}
+.db-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 14px;
+}
+.db-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.db-card-title-row .db-card-title { margin-bottom: 0; }
+
+
+/* ─── Donut Chart ─────────────────────────────────────────────── */
+.db-donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.db-donut {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+.db-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.db-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+.db-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.db-legend-label {
+  flex: 1;
+  color: #666;
+}
+.db-legend-value {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ─── Bar List ────────────────────────────────────────────────── */
+.db-bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.db-bar-item { display: flex; flex-direction: column; gap: 4px; }
+.db-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+.db-bar-label { color: #666; }
+.db-bar-value { font-weight: 600; color: #1a1a1a; }
+.db-bar-track {
+  height: 7px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.db-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  min-width: 2px;
+}
+
+/* ─── Bottom Grid ─────────────────────────────────────────────── */
+.db-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ─── Warranty Alerts ─────────────────────────────────────────── */
+.db-warranty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.db-warranty-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.db-warranty-item:hover { opacity: 0.85; }
+.db-warranty-tag {
+  font-size: 12px;
+  font-weight: 600;
+}
+.db-warranty-sub { font-size: 11px; margin-top: 2px; }
+
+/* ─── Recent Activity ─────────────────────────────────────────── */
+.db-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.db-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.db-activity-item:last-child { border-bottom: none; }
+.db-activity-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.db-activity-info {
+  flex: 1;
+  min-width: 0;
+}
+.db-activity-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+.db-activity-desc {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.db-activity-action {
+  font-size: 11px;
+}
+.db-activity-time {
+  font-size: 10px;
+  color: #bbb;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

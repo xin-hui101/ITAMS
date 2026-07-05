@@ -1,0 +1,448 @@
+/* ─── Page Wrapper ────────────────────────────────────────────── */
+.am-page {
+  background: #fff;
+  padding: 10px;
+  min-height: 100%;
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.am-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+}
+
+/* ─── Toolbar ─────────────────────────────────────────────────── */
+.am-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.am-search-wrap {
+  position: relative;
+  flex: 1;
+}
+.am-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  font-size: 15px;
+  pointer-events: none;
+}
+.am-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1a1a1a;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.am-search-input:focus { border-color: #00bcd4; }
+.am-filter-select {
+  padding: 10px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  outline: none;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+.am-filter-select:focus { border-color: #00bcd4; }
+
+/* ─── Table ───────────────────────────────────────────────────── */
+.am-table-wrap {
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.am-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.am-table thead { background: #fafafa; }
+.am-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+.am-table th.sortable { cursor: pointer; user-select: none; }
+.am-table th.sortable:hover { color: #555; }
+.am-th-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Sort icons */
+.am-sort-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.am-sort-icon span {
+  display: block;
+  width: 0; height: 0;
+  opacity: 0.3;
+}
+.am-sort-icon .up {
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 4px solid #555;
+}
+.am-sort-icon .down {
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 4px solid #555;
+}
+.am-sort-icon.asc .up   { opacity: 1; border-bottom-color: #00bcd4; }
+.am-sort-icon.desc .down { opacity: 1; border-top-color: #00bcd4; }
+
+.am-table td {
+  padding: 13px 16px;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #f9f9f9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.am-table tr:last-child td { border-bottom: none; }
+.am-table tbody tr:hover td { background: #fafafa; }
+
+/* Asset tag */
+.am-asset-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1565c0;
+  background: #e3f2fd;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Name cell */
+.am-name-cell { display: flex; flex-direction: column; gap: 2px; }
+.am-name { font-weight: 600; color: #1a1a1a; font-size: 13px; }
+.am-sub  { font-size: 11px; color: #888; }
+
+/* Status badges */
+.am-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.am-badge-active      { background: #e8f5e9; color: #2e7d32; }
+.am-badge-inactive    { background: #f5f5f5; color: #666; }
+.am-badge-maintenance { background: #fff8e1; color: #f57f17; }
+.am-badge-dispose     { background: #fce4ec; color: #c62828; }
+
+/* Category badge */
+.am-badge-category {
+  background: #e3f2fd;
+  color: #1565c0;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Actions */
+.am-actions { display: flex; gap: 6px; }
+.am-btn-icon {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.am-btn-icon:hover { opacity: 0.8; transform: translateY(-1px); }
+.am-btn-view { background: #e3f2fd; color: #1565c0; }
+.am-btn-edit { background: #fff8e1; color: #f57f17; }
+.am-btn-del  { background: #fce4ec; color: #c62828; }
+
+/* ─── Empty / Loading / Error ─────────────────────────────────── */
+.am-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: #bbb;
+}
+.am-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.am-empty-text { font-size: 14px; }
+.am-loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
+.am-error   { text-align: center; padding: 48px; color: #e74c3c; font-size: 14px; }
+
+/* ─── Pagination ──────────────────────────────────────────────── */
+.am-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.am-pagination-info { font-size: 12px; color: #888; }
+.am-pagination-btns { display: flex; gap: 4px; }
+.am-page-btn {
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.am-page-btn:hover { background: #f5f5f5; }
+.am-page-btn.active {
+  background: #f5c518;
+  color: #4a2f00;
+  border-color: #f5c518;
+  font-weight: 600;
+}
+.am-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+/* ─── Category Header ─────────────────────────────────────────── */
+.am-category-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+.am-category-header i { font-size: 25px; color: #f57f17; }
+
+/* ─── KPI Cards ───────────────────────────────────────────────── */
+.am-kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.am-kpi-card {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  flex: 1 1 0; 
+  min-width: 140px; 
+  display: flex;
+  align-items: center; 
+  gap: 12px; 
+}
+
+
+.am-kpi-icon {
+  font-size: 28px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.am-kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; 
+  overflow: hidden; 
+}
+
+
+.am-kpi-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.am-kpi-label {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left; 
+}
+
+.am-kpi-categories .am-kpi-icon { color: #f57f17; }
+.am-kpi-total .am-kpi-icon      { color: #1565c0; }
+.am-kpi-value-card .am-kpi-icon { color: #2e7d32; }
+.am-kpi-active .am-kpi-icon     { color: #2e7d32; }
+.am-kpi-inactive .am-kpi-icon   { color: #666; }
+.am-kpi-maintenance .am-kpi-icon{ color: #f57f17; }
+.am-kpi-dispose .am-kpi-icon    { color: #c62828; }
+
+/* RM text icon */
+.am-kpi-icon-rm {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e7d32;
+  width: 16px;
+  text-align: center;
+}
+/* ─── Inline Add Button ───────────────────────────────────────── */
+.am-btn-add-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #00bcd4;
+  color: #fff;
+  border: 1.5px solid #00bcd4;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.am-btn-add-inline:hover {
+  background: #fff;
+  color: #00bcd4;
+}
+.am-btn-add-inline i { font-size: 15px; }
+
+/* ─── Print Button ────────────────────────────────────────────── */
+.am-btn-print {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5c518;
+  color: #4a2f00;
+  border: 1.5px solid #f5c518;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.am-btn-print:hover {
+  background: #fff;
+  color: #f5c518;
+  border-color: #f5c518;
+}
+.am-btn-print i { font-size: 15px; }
+
+  /* Hidden by default outside print */
+  .am-print-only { display: none; }
+  
+/* ─── Print Styles ────────────────────────────────────────────── */
+@media print {
+  /* Landscape A4 */
+  @page { size: A4 landscape; margin: 15mm; }
+
+  /* Hide everything */
+  body * { visibility: hidden; }
+
+  /* Show KPI cards */
+  #am-print-kpi,
+  #am-print-kpi * { visibility: visible; }
+
+  /* Show hidden print table only — override display:none */
+.am-print-only {
+  display: block !important;
+  visibility: visible !important;
+}
+
+#am-print-table-all,
+#am-print-table-all * {
+  visibility: visible !important;
+}
+#am-print-table-all table { display: table !important; }
+#am-print-table-all thead { display: table-header-group !important; }
+#am-print-table-all tbody { display: table-row-group !important; }
+#am-print-table-all tr    { display: table-row !important; }
+#am-print-table-all th,
+#am-print-table-all td    { display: table-cell !important; }
+
+  /* Position KPI at top */
+  #am-print-kpi {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* Position full print table below KPI */
+  #am-print-table-all {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Print table styles */
+  #am-print-table-all table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+  }
+  #am-print-table-all th,
+  #am-print-table-all td {
+    border: 1px solid #ccc !important;
+    color: #000 !important;
+    background: #fff !important;
+    font-size: 9px !important;
+    padding: 5px 6px !important;
+    text-align: left !important;
+  }
+  #am-print-table-all thead tr {
+    background: #f0f0f0 !important;
+  }
+  #am-print-table-all th {
+    font-weight: 700 !important;
+    background: #f0f0f0 !important;
+  }
+
+  /* KPI card styles when printing */
+  .am-kpi-card {
+    background: #fafafa !important;
+    border: 1px solid #ddd !important;
+    padding: 6px 10px !important;
+    flex: 0 0 auto !important;
+  }
+  .am-kpi-value { font-size: 14px !important; }
+  .am-kpi-label { font-size: 9px !important; }
+  .am-kpi-icon  { font-size: 12px !important; }
+}

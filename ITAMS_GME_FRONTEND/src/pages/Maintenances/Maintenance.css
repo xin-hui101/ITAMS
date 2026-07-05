@@ -1,0 +1,264 @@
+/* ─── Page Wrapper ────────────────────────────────────────────── */
+.mn-page {
+  background: #fff;
+  padding: 10px;
+  min-height: 100%;
+}
+
+/* ─── Toolbar ─────────────────────────────────────────────────── */
+.mn-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.mn-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+.mn-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  font-size: 15px;
+  pointer-events: none;
+}
+.mn-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px 10px 36px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1a1a1a;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.mn-search-input:focus { border-color: #00bcd4; }
+.mn-filter-select {
+  padding: 10px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #555;
+  outline: none;
+  background: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 130px;
+}
+.mn-filter-select:focus { border-color: #00bcd4; }
+
+/* ─── KPI Cards ───────────────────────────────────────────────── */
+/* Matches the layout used on Asset Management — icon + value+label  */
+.mn-kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mn-kpi-card {
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  flex: 1 1 0;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mn-kpi-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mn-kpi-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.mn-kpi-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mn-kpi-label {
+  font-size: 11px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.mn-kpi-total .mn-kpi-icon      { color: #1565c0; }
+.mn-kpi-pending .mn-kpi-icon    { color: #c62828; }
+.mn-kpi-inprogress .mn-kpi-icon { color: #f57f17; }
+.mn-kpi-completed .mn-kpi-icon  { color: #2e7d32; }
+
+/* ─── Inline Add Button ───────────────────────────────────────── */
+.mn-btn-add-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #00bcd4;
+  color: #fff;
+  border: 1.5px solid #00bcd4;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+.mn-btn-add-inline:hover {
+  background: #fff;
+  color: #00bcd4;
+}
+.mn-btn-add-inline i { font-size: 15px; }
+
+/* ─── Table ───────────────────────────────────────────────────── */
+.mn-table-wrap {
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mn-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.mn-table thead { background: #fafafa; }
+.mn-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+.mn-table td {
+  padding: 13px 16px;
+  font-size: 13px;
+  color: #333;
+  border-bottom: 1px solid #f9f9f9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mn-table tr:last-child td { border-bottom: none; }
+.mn-table tbody tr:hover td { background: #fafafa; }
+
+/* Asset cell */
+.mn-asset-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1565c0;
+  background: #e3f2fd;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+.mn-asset-name { font-size: 11px; color: #888; }
+
+/* Badges */
+.mn-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Type badges */
+.mn-badge-repair     { background: #e3f2fd; color: #1565c0; }
+.mn-badge-service    { background: #e8f5e9; color: #2e7d32; }
+.mn-badge-inspection { background: #f5f5f5; color: #555; }
+
+/* Status badges */
+.mn-badge-pending    { background: #fce4ec; color: #c62828; }
+.mn-badge-inprogress { background: #fff8e1; color: #f57f17; }
+.mn-badge-completed  { background: #e8f5e9; color: #2e7d32; }
+
+/* Actions */
+.mn-actions { display: flex; gap: 6px; }
+.mn-btn-icon {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.mn-btn-icon:hover { opacity: 0.8; transform: translateY(-1px); }
+.mn-btn-view { background: #e3f2fd; color: #1565c0; }
+.mn-btn-edit { background: #fff8e1; color: #f57f17; }
+.mn-btn-del  { background: #fce4ec; color: #c62828; }
+
+/* ─── Empty / Loading / Error ─────────────────────────────────── */
+.mn-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: #bbb;
+}
+.mn-empty-icon { font-size: 36px; margin-bottom: 12px; }
+.mn-empty-text { font-size: 14px; }
+.mn-loading { text-align: center; padding: 48px; color: #888; font-size: 14px; }
+.mn-error   { text-align: center; padding: 48px; color: #e74c3c; font-size: 14px; }
+
+/* ─── Pagination ──────────────────────────────────────────────── */
+.mn-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.mn-pagination-info { font-size: 12px; color: #888; }
+.mn-pagination-btns { display: flex; gap: 4px; }
+.mn-page-btn {
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.mn-page-btn:hover { background: #f5f5f5; }
+.mn-page-btn.active {
+  background: #f5c518;
+  color: #4a2f00;
+  border-color: #f5c518;
+  font-weight: 600;
+}
+.mn-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }

@@ -1,0 +1,173 @@
+/* ─── Overlay ─────────────────────────────────────────────────── */
+.mn-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+/* ─── Box ─────────────────────────────────────────────────────── */
+.mn-detail-box {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.mn-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+.mn-detail-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* ─── Top Section ─────────────────────────────────────────────── */
+.mn-detail-top {
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.mn-detail-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: #e8f5e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mn-detail-icon i { font-size: 26px; color: #2e7d32; }
+.mn-detail-asset-tag {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1565c0;
+  background: #e3f2fd;
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.mn-detail-asset-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+.mn-detail-asset-cat {
+  font-size: 12px;
+  color: #888;
+}
+
+/* ─── Body ────────────────────────────────────────────────────── */
+.mn-detail-body { padding: 20px 24px; }
+.mn-detail-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  margin-top: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.mn-detail-section-title:first-child { margin-top: 0; }
+
+/* ─── Info Rows ───────────────────────────────────────────────── */
+.mn-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid #f9f9f9;
+  font-size: 13px;
+}
+.mn-detail-row:last-child { border-bottom: none; }
+.mn-detail-row-label { color: #888; }
+.mn-detail-row-value { color: #1a1a1a; font-weight: 500; text-align: right; }
+
+/* ─── Badges ──────────────────────────────────────────────────── */
+.mn-detail-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.mn-detail-badge-repair     { background: #e3f2fd; color: #1565c0; }
+.mn-detail-badge-service    { background: #e8f5e9; color: #2e7d32; }
+.mn-detail-badge-inspection { background: #f5f5f5; color: #555; }
+.mn-detail-badge-pending    { background: #fce4ec; color: #c62828; }
+.mn-detail-badge-inprogress { background: #fff8e1; color: #f57f17; }
+.mn-detail-badge-completed  { background: #e8f5e9; color: #2e7d32; }
+
+/* ─── Description & Remarks ───────────────────────────────────── */
+.mn-detail-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 4px;
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.mn-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+}
+.mn-detail-btn-close {
+  padding: 10px 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fff;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.mn-detail-btn-close:hover { background: #f5f5f5; }
+.mn-detail-btn-edit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #fff8e1;
+  color: #f57f17;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.mn-detail-btn-edit:hover { background: #fff3cd; }

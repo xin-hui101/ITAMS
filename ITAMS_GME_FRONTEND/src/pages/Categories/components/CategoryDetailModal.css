@@ -1,0 +1,189 @@
+/* ─── Overlay ─────────────────────────────────────────────────── */
+.cat-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+/* ─── Box ─────────────────────────────────────────────────────── */
+.cat-detail-box {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.cat-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+.cat-detail-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* ─── Icon Section ────────────────────────────────────────────── */
+.cat-detail-icon-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.cat-detail-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  background: #fff8e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cat-detail-icon i { font-size: 28px; color: #f57f17; }
+.cat-detail-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.cat-detail-desc {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* ─── Info Rows ───────────────────────────────────────────────── */
+.cat-detail-body { padding: 20px 24px; }
+
+.cat-detail-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  margin-top: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.cat-detail-section-title:first-child { margin-top: 0; }
+
+/* ─── Detail Row ──────────────────────────────────────────────── */
+.cat-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+  font-size: 13px;
+}
+.cat-detail-row:last-child { border-bottom: none; }
+.cat-detail-row-label { color: #888; }
+.cat-detail-row-value { color: #1a1a1a; font-weight: 500; }
+
+/* ─── Fields List ─────────────────────────────────────────────── */
+.cat-detail-fields { margin-top: 20px; }
+.cat-detail-field-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.cat-detail-field-label { font-weight: 600; color: #1a1a1a; }
+.cat-detail-field-meta { display: flex; align-items: center; gap: 8px; }
+.cat-detail-field-type {
+  background: rgba(245,197,24,0.15);
+  color: #b8860b;
+  border: 1px solid rgba(245,197,24,0.3);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.cat-detail-field-required {
+  background: #fce4ec;
+  color: #c62828;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ─── Children ────────────────────────────────────────────────── */
+.cat-detail-children { margin-top: 20px; }
+.cat-detail-child-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f0f9ff;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+.cat-detail-child-name { font-weight: 600; color: #1565c0; }
+.cat-detail-child-count {
+  font-size: 11px;
+  color: #888;
+}
+
+/* ─── Footer ──────────────────────────────────────────────────── */
+.cat-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+}
+.cat-detail-btn-close {
+  padding: 10px 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fff;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.cat-detail-btn-close:hover { background: #f5f5f5; }
+.cat-detail-btn-edit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #fff8e1;
+  color: #f57f17;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.cat-detail-btn-edit:hover { background: #fff3cd; }
+
