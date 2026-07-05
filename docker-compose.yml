@@ -29,6 +29,10 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+    # Mount SSL certificates from VM into container
+    - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
     networks:
