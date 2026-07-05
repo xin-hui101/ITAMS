@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   // Redirect if already logged in
   useEffect(() => {
-    if (isAuthenticated) navigate('/dashboard');
+    if (isAuthenticated) navigate('/db');
   }, [isAuthenticated, navigate]);
 
   // ── Validation ────────────────────────────────────────────────
@@ -49,7 +49,7 @@ export default function LoginPage() {
     try {
       const data = await loginUser({ email, password });
       login(data.token, data.user);
-      navigate('/dashboard');
+      navigate('/db');
     } catch (err: any) {
       setApiError(err.message || 'Login failed. Please try again.');
     } finally {
