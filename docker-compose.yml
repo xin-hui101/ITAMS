@@ -23,7 +23,7 @@ services:
   # Frontend — React + Nginx
   frontend:
     build:
-      context: ./ITAMS_GME
+      context: ./ITAMS_GME_FRONTEND
       dockerfile: Dockerfile
     container_name: itams-frontend
     restart: always
