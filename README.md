@@ -17,6 +17,7 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Warranty expiry monitoring and alerts
 - Purchase price tracking and total asset value calculation
 - Print asset reports (filtered, landscape PDF)
+<img width="959" height="437" alt="image" src="https://github.com/user-attachments/assets/d0b4895f-14b9-4c5e-bc5e-5bbb77f4575d" />
 
 ### 🔧 Maintenance Management
 
@@ -24,6 +25,7 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Filter assets by category in the maintenance modal
 - Track maintenance status (Pending, In Progress, Completed)
 - Record technician/company, cost, and completion date
+<img width="959" height="436" alt="image" src="https://github.com/user-attachments/assets/c69b6731-a2e9-4bfc-95e6-9341a45e8b54" />
 
 ### 👥 User Management
 
@@ -31,6 +33,7 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Granular module-level permissions (Create, Read, Update, Delete)
 - Token versioning — permission changes force immediate re-login
 - User status management (Active/Inactive)
+<img width="959" height="445" alt="image" src="https://github.com/user-attachments/assets/609473b4-238d-4c3a-8964-58f24f6da74d" />
 
 ### 📁 Categories Management
 
@@ -38,6 +41,8 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Configurable fixed fields (Serial Number, Brand, Model, Location)
 - Custom field definitions per category (Text, Number, Date, Select)
 - Asset prefix auto-numbering (e.g. LAP-000 → first asset is LAP-001)
+<img width="947" height="439" alt="image" src="https://github.com/user-attachments/assets/64219398-83d8-46e3-9dcf-afacf886a85b" />
+
 
 ### 📋 Audit Log
 
@@ -47,6 +52,7 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Date range filtering
 - KPI cards for today's activity
 - Print audit log reports
+<img width="958" height="440" alt="image" src="https://github.com/user-attachments/assets/c4f58840-7c9e-47ea-8f46-c1ee41ffc86d" />
 
 ### 📊 Dashboard
 
@@ -57,6 +63,8 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Warranty expiring soon alerts (expired, 7 days, 30 days)
 - Recent activity feed
 - Permission-based widget visibility
+<img width="959" height="440" alt="image" src="https://github.com/user-attachments/assets/b2966b97-9fbb-45d4-b3c5-51d8125e1628" />
+
 
 ### 🤖 AI Chatbot Assistant
 
@@ -64,6 +72,8 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Responses grounded in real-time data fetched directly from the database
 - Supports markdown formatting including tables for structured data
 - Responds in the same language the user writes in
+<img width="955" height="443" alt="image" src="https://github.com/user-attachments/assets/765e33a1-f21d-40c8-8b59-599a979753e4" />
+
 
 **What the assistant knows:**
 
