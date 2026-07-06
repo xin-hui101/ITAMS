@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import './Topbar.css';
 
 const ROUTE_CONFIG: Record<string, { name: string; icon: string }> = {
-  '/dashboard':   { name: 'Dashboard',            icon: 'ti-layout-dashboard' },
-  '/users':       { name: 'User Management',      icon: 'ti-users'           },
-  '/assets':      { name: 'Asset Management',     icon: 'ti-device-laptop'   },
-  '/maintenance': { name: 'Maintenance',           icon: 'ti-tool'            },
-  '/categories':  { name: 'Categories Management', icon: 'ti-category'       },
-  '/audit-logs':  { name: 'Audit Log',             icon: 'ti-clipboard-list' },
+  '/db':   { name: 'Dashboard',            icon: 'ti-layout-dashboard' },
+  '/um':       { name: 'User Management',      icon: 'ti-users'           },
+  '/am':      { name: 'Asset Management',     icon: 'ti-device-laptop'   },
+  '/mn': { name: 'Maintenance',           icon: 'ti-tool'            },
+  '/cm':  { name: 'Categories Management', icon: 'ti-category'       },
+  '/al':  { name: 'Audit Log',             icon: 'ti-clipboard-list' },
 };
 
 function formatDate(date: Date): string {
