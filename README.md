@@ -58,6 +58,32 @@ A full-stack web application for managing IT assets, maintenance records, user p
 - Recent activity feed
 - Permission-based widget visibility
 
+### 🤖 AI Chatbot Assistant
+
+- Ask questions about assets, maintenance, and warranty status in natural language
+- Responses grounded in real-time data fetched directly from the database
+- Supports markdown formatting including tables for structured data
+- Responds in the same language the user writes in
+
+**What the assistant knows:**
+
+| Data                | Description                                           |
+| ------------------- | ----------------------------------------------------- |
+| Total Assets        | Count of all registered assets                        |
+| Total Asset Value   | Sum of all asset purchase prices (RM)                 |
+| Active Assets       | Count of assets with status `Active`                  |
+| Pending Maintenance | Count of maintenance records with status `Pending`    |
+| Assets by Category  | Breakdown of asset count per category                 |
+| Warranty Alerts     | Assets with warranty expiring within the next 30 days |
+| Recent Maintenance  | Latest 10 maintenance records                         |
+
+**Example questions:**
+
+- `Which assets are expiring soon?`
+- `What is the total asset value?`
+- `How many assets are under maintenance?`
+- `Show me asset summary`
+
 ---
 
 ## Tech Stack
@@ -75,13 +101,14 @@ A full-stack web application for managing IT assets, maintenance records, user p
 
 ### Backend
 
-| Technology            | Purpose           |
-| --------------------- | ----------------- |
-| ASP.NET Core 10       | Web API framework |
-| C#                    | Backend language  |
-| Entity Framework Core | ORM               |
-| JWT Authentication    | Stateless auth    |
-| BCrypt                | Password hashing  |
+| Technology              | Purpose           |
+| ----------------------- | ----------------- |
+| ASP.NET Core 10         | Web API framework |
+| C#                      | Backend language  |
+| Entity Framework Core   | ORM               |
+| JWT Authentication      | Stateless auth    |
+| BCrypt                  | Password hashing  |
+| Google Gemini 3.5 Flash | AI chatbot        |
 
 ### Database
 
@@ -116,6 +143,22 @@ Azure VM — Docker
          ↓
 Azure SQL Database (ITAMS_DB)
 ```
+
+---
+
+## Configuration
+
+Add your Gemini API key to `appsettings.json`:
+
+```json
+"Gemini": {
+  "ApiKey": "your-gemini-api-key-here"
+}
+```
+
+> **Note:** `appsettings.Production.json` is excluded from version control via `.gitignore`. Never commit your API key.
+
+---
 
 ## Author
 

@@ -64,6 +64,8 @@ builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<AssetService>();
 builder.Services.AddScoped<MaintenanceService>();
 builder.Services.AddScoped<DashboardService>();
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<ChatService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
