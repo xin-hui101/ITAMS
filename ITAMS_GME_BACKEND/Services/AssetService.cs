@@ -24,6 +24,8 @@ namespace ITAMS_GME_BACKEND.Services
         {
             var q = _db.Assets
                 .Include(a => a.Category)
+                .Include(a => a.AssetFieldValues)
+                    .ThenInclude(fv => fv.CategoryField)
                 .AsQueryable();
 
             // Search by name, asset tag, brand, model
@@ -67,6 +69,19 @@ namespace ITAMS_GME_BACKEND.Services
                     PurchaseDate = a.PurchaseDate,
                     WarrantyExpiry = a.WarrantyExpiry,
                     CreatedAt = a.CreatedAt,
+                    // Only include custom fields marked ShowInTable
+                    CustomFields = a.AssetFieldValues
+            .Where(fv => fv.CategoryField.ShowInTable)
+            .Select(fv => new AssetTableFieldDto
+            {
+                FieldKey = fv.CategoryField.FieldKey,
+                FieldLabel = fv.CategoryField.FieldLabel,
+                Value = fv.ValueText
+                          ?? (fv.ValueNumber.HasValue ? fv.ValueNumber.Value.ToString() : null)
+                          ?? (fv.ValueDate.HasValue ? fv.ValueDate.Value.ToString("dd MMM yyyy") : null)
+                          ?? "—",
+            })
+            .ToList(),
                 })
                 .ToListAsync();
 
@@ -158,6 +173,56 @@ namespace ITAMS_GME_BACKEND.Services
                     })
                     .ToList(),
             };
+        }
+
+        // ── Get distinct field values for autocomplete ────────────────
+        public async Task<List<string>> GetFieldValuesAsync(
+    string fieldKey, string? search, int? categoryId)
+        {
+            IQueryable<string?> query;
+
+            // Fixed fields — filter by category if provided
+            if (fieldKey is "name" or "brand" or "model" or "location" or "serialNumber")
+            {
+                var assetsQuery = _db.Assets.AsQueryable();
+
+                // Filter by category
+                if (categoryId.HasValue)
+                    assetsQuery = assetsQuery.Where(a => a.CategoryId == categoryId.Value);
+
+                query = fieldKey switch
+                {
+                    "name" => assetsQuery.Select(a => (string?)a.Name),
+                    "brand" => assetsQuery.Select(a => a.Brand),
+                    "model" => assetsQuery.Select(a => a.Model),
+                    "location" => assetsQuery.Select(a => a.Location),
+                    "serialNumber" => assetsQuery.Select(a => a.SerialNumber),
+                    _ => assetsQuery.Select(a => (string?)a.Name),
+                };
+            }
+            else
+            {
+                // Custom fields — always filter by fieldKey and category
+                var customQuery = _db.AssetFieldValues
+                    .Where(fv => fv.CategoryField.FieldKey == fieldKey);
+
+                if (categoryId.HasValue)
+                    customQuery = customQuery.Where(fv => fv.Asset.CategoryId == categoryId.Value);
+
+                query = customQuery.Select(fv => fv.ValueText);
+            }
+
+            // Search filter
+            if (!string.IsNullOrWhiteSpace(search))
+                query = query.Where(v => v != null && v.ToLower().Contains(search.ToLower()));
+
+            return await query
+                .Where(v => v != null && v != "")
+                .Distinct()
+                .OrderBy(v => v)
+                .Take(10)
+                .Select(v => v!)
+                .ToListAsync();
         }
 
         // ── Create Asset ──────────────────────────────────────────

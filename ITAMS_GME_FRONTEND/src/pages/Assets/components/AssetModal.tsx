@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import AutocompleteInput from '../../../components/AutocompleteInput/AutocompleteInput';
 import type {
   AssetDetail,
   CreateAssetPayload,
@@ -248,39 +249,42 @@ const [form, setForm] = useState<FormData>({
   }
 
   // ── Render custom field input ─────────────────────────────────
-  function renderFieldInput(field: CategoryField) {
-    const value = customValues[field.id] ?? '';
-    if (field.fieldType === 'number') {
-      return (
-        <input
-          className="am-form-input"
-          type="number"
-          placeholder={field.defaultValue ?? ''}
-          value={value}
-          onChange={e => handleCustomChange(field.id, e.target.value)}
-        />
-      );
-    }
-    if (field.fieldType === 'date') {
-      return (
-        <input
-          className="am-form-input"
-          type="date"
-          value={value}
-          onChange={e => handleCustomChange(field.id, e.target.value)}
-        />
-      );
-    }
+function renderFieldInput(field: CategoryField) {
+  const value = customValues[field.id] ?? '';
+
+  if (field.fieldType === 'number') {
     return (
       <input
         className="am-form-input"
-        type="text"
+        type="number"
         placeholder={field.defaultValue ?? ''}
         value={value}
         onChange={e => handleCustomChange(field.id, e.target.value)}
       />
     );
   }
+  if (field.fieldType === 'date') {
+    return (
+      <input
+        className="am-form-input"
+        type="date"
+        value={value}
+        onChange={e => handleCustomChange(field.id, e.target.value)}
+      />
+    );
+  }
+  // Text and select — use autocomplete
+  return (
+    <AutocompleteInput
+      fieldKey={field.fieldKey}
+      categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+      value={value}
+      onChange={v => handleCustomChange(field.id, v)}
+      placeholder={field.defaultValue ?? ''}
+      className="am-form-input"
+    />
+  );
+}
 
   // Helper — render required asterisk based on fixedConfig
   function requiredMark(isRequired: boolean) {
@@ -357,13 +361,14 @@ const [form, setForm] = useState<FormData>({
                   <label className="am-form-label">
                     Name <span>*</span>
                   </label>
-                  <input
-                    className={`am-form-input ${errors.name ? 'am-form-input--error' : ''}`}
-                    name="name"
-                    placeholder="e.g. Dell XPS 15"
-                    value={form.name}
-                    onChange={handleChange}
-                  />
+                  <AutocompleteInput
+    fieldKey="name"
+    categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+    value={form.name}
+    onChange={v => setForm(prev => ({ ...prev, name: v }))}
+    placeholder="e.g. Dell XPS 15"
+    className={`am-form-input ${errors.name ? 'am-form-input--error' : ''}`}
+  />
                   {errors.name && (
                     <span className="am-form-error">{errors.name}</span>
                   )}
@@ -390,72 +395,76 @@ const [form, setForm] = useState<FormData>({
                 </div>
 
                 {/* Serial Number */}
-                <div className="am-form-field">
-                  <label className="am-form-label">
-                    Serial Number {requiredMark(fixedConfig.serialNumber)}
-                  </label>
-                  <input
-                    className={`am-form-input ${errors.serialNumber ? 'am-form-input--error' : ''}`}
-                    name="serialNumber"
-                    placeholder="e.g. SN-123456"
-                    value={form.serialNumber}
-                    onChange={handleChange}
-                  />
-                  {errors.serialNumber && (
-                    <span className="am-form-error">{errors.serialNumber}</span>
-                  )}
-                </div>
+<div className="am-form-field">
+  <label className="am-form-label">
+    Serial Number {requiredMark(fixedConfig.serialNumber)}
+  </label>
+  <AutocompleteInput
+    fieldKey="serialNumber"
+    categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+    value={form.serialNumber}
+    onChange={v => setForm(prev => ({ ...prev, serialNumber: v }))}
+    placeholder="e.g. SN-123456"
+    className={`am-form-input ${errors.serialNumber ? 'am-form-input--error' : ''}`}
+  />
+  {errors.serialNumber && (
+    <span className="am-form-error">{errors.serialNumber}</span>
+  )}
+</div>
 
-                {/* Brand */}
-                <div className="am-form-field">
-                  <label className="am-form-label">
-                    Brand {requiredMark(fixedConfig.brand)}
-                  </label>
-                  <input
-                    className={`am-form-input ${errors.brand ? 'am-form-input--error' : ''}`}
-                    name="brand"
-                    placeholder="e.g. Dell"
-                    value={form.brand}
-                    onChange={handleChange}
-                  />
-                  {errors.brand && (
-                    <span className="am-form-error">{errors.brand}</span>
-                  )}
-                </div>
+{/* Brand */}
+<div className="am-form-field">
+  <label className="am-form-label">
+    Brand {requiredMark(fixedConfig.brand)}
+  </label>
+  <AutocompleteInput
+    fieldKey="brand"
+    categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+    value={form.brand}
+    onChange={v => setForm(prev => ({ ...prev, brand: v }))}
+    placeholder="e.g. Dell"
+    className={`am-form-input ${errors.brand ? 'am-form-input--error' : ''}`}
+  />
+  {errors.brand && (
+    <span className="am-form-error">{errors.brand}</span>
+  )}
+</div>
 
-                {/* Model */}
-                <div className="am-form-field">
-                  <label className="am-form-label">
-                    Model {requiredMark(fixedConfig.model)}
-                  </label>
-                  <input
-                    className={`am-form-input ${errors.model ? 'am-form-input--error' : ''}`}
-                    name="model"
-                    placeholder="e.g. XPS 15 9500"
-                    value={form.model}
-                    onChange={handleChange}
-                  />
-                  {errors.model && (
-                    <span className="am-form-error">{errors.model}</span>
-                  )}
-                </div>
+{/* Model */}
+<div className="am-form-field">
+  <label className="am-form-label">
+    Model {requiredMark(fixedConfig.model)}
+  </label>
+  <AutocompleteInput
+    fieldKey="model"
+    categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+    value={form.model}
+    onChange={v => setForm(prev => ({ ...prev, model: v }))}
+    placeholder="e.g. XPS 15 9500"
+    className={`am-form-input ${errors.model ? 'am-form-input--error' : ''}`}
+  />
+  {errors.model && (
+    <span className="am-form-error">{errors.model}</span>
+  )}
+</div>
 
-                {/* Location */}
-                <div className="am-form-field">
-                  <label className="am-form-label">
-                    Location {requiredMark(fixedConfig.location)}
-                  </label>
-                  <input
-                    className={`am-form-input ${errors.location ? 'am-form-input--error' : ''}`}
-                    name="location"
-                    placeholder="e.g. Office A"
-                    value={form.location}
-                    onChange={handleChange}
-                  />
-                  {errors.location && (
-                    <span className="am-form-error">{errors.location}</span>
-                  )}
-                </div>
+{/* Location */}
+<div className="am-form-field">
+  <label className="am-form-label">
+    Location {requiredMark(fixedConfig.location)}
+  </label>
+  <AutocompleteInput
+    fieldKey="location"
+    categoryId={form.categoryId ? Number(form.categoryId) : undefined}
+    value={form.location}
+    onChange={v => setForm(prev => ({ ...prev, location: v }))}
+    placeholder="e.g. Office A"
+    className={`am-form-input ${errors.location ? 'am-form-input--error' : ''}`}
+  />
+  {errors.location && (
+    <span className="am-form-error">{errors.location}</span>
+  )}
+</div>
 
                 {/* Purchase Price */}
                 <div className="am-form-field">
