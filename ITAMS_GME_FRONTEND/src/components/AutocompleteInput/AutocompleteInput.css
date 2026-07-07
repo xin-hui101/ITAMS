@@ -1,0 +1,40 @@
+/* ─── Autocomplete Wrapper ────────────────────────────────────── */
+.ac-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ─── Dropdown ────────────────────────────────────────────────── */
+.ac-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+/* ─── Item ────────────────────────────────────────────────────── */
+.ac-item {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background 0.15s;
+}
+.ac-item:last-child { border-bottom: none; }
+.ac-item:hover { background: #f0f7ff; color: #1565c0; }
+
+/* ─── Loading ─────────────────────────────────────────────────── */
+.ac-loading {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #888;
+}

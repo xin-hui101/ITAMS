@@ -35,16 +35,25 @@ export interface CategoryField {
   fieldLabel: string;
   fieldType: 'text' | 'number' | 'date' | 'select';
   isRequired: boolean;
+  showInTable: boolean;
   defaultValue?: string;
   sortOrder: number;
 }
 
 // ── Fixed Fields Config ───────────────────────────────────────
 export interface FixedFieldsConfig {
-  serialNumber: boolean;
-  brand:        boolean;
-  model:        boolean;
-  location:     boolean;
+  serialNumber:        boolean;
+  serialNumberInTable: boolean;
+  brand:               boolean;
+  brandInTable:        boolean;
+  model:               boolean;
+  modelInTable:        boolean;
+  location:            boolean;
+  locationInTable:     boolean;
+  purchasePrice:       boolean;
+  purchasePriceInTable: boolean;
+  warrantyExpiry:      boolean;
+  warrantyExpiryInTable: boolean;
 }
 
 // ── Create Category ───────────────────────────────────────────
@@ -73,6 +82,7 @@ export interface CreateCategoryFieldPayload {
   fieldLabel: string;
   fieldType: string;
   isRequired: boolean;
+  showInTable: boolean;
   defaultValue?: string;
   sortOrder: number;
 }

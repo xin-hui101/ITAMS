@@ -15,14 +15,14 @@ export interface AssetListItem {
   name: string;
   category: string;
   categoryId: number;
-  status: AssetStatus;
+  status: string;
   brand?: string;
   model?: string;
   location?: string;
-  purchaseDate?: string;
-  warrantyExpiry?: string;
   purchasePrice?: number;
+  warrantyExpiry?: string;
   createdAt: string;
+  customFields?: { fieldKey: string; fieldLabel: string; value: string }[];  // ← 加这行
 }
 
 // ── Asset Detail ──────────────────────────────────────────────

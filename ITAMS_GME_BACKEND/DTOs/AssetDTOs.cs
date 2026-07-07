@@ -16,6 +16,7 @@
         public DateTime? PurchaseDate { get; set; }
         public DateTime? WarrantyExpiry { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<AssetTableFieldDto> CustomFields { get; set; } = new();
     }
 
     // ── Detail ───────────────────────────────────────────────────
@@ -115,5 +116,12 @@
         public int UnderMaintenanceCount { get; set; }
         public int DisposeCount { get; set; }
         public decimal TotalValue { get; set; }
+    }
+
+    public class AssetTableFieldDto
+    {
+        public string FieldKey { get; set; } = string.Empty;
+        public string FieldLabel { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 }

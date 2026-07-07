@@ -40,6 +40,7 @@
         public string FieldLabel { get; set; } = string.Empty;
         public string FieldType { get; set; } = string.Empty;
         public bool IsRequired { get; set; }
+        public bool ShowInTable { get; set; }
         public string? DefaultValue { get; set; }
         public int SortOrder { get; set; }
     }
@@ -73,6 +74,7 @@
         public string FieldLabel { get; set; } = string.Empty;
         public string FieldType { get; set; } = string.Empty;
         public bool IsRequired { get; set; } = false;
+        public bool ShowInTable { get; set; } = false;
         public string? DefaultValue { get; set; }
         public int SortOrder { get; set; } = 0;
     }

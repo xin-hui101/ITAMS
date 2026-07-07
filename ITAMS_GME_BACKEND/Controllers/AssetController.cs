@@ -118,5 +118,18 @@ namespace ITAMS_GME_BACKEND.Controllers
                 return Conflict(new { message = ex.Message });
             }
         }
+
+        // GET api/assets/field-values?fieldKey=brand&search=mic
+        // Returns distinct values for autocomplete suggestions
+        [HttpGet("field-values")]
+        [RequirePermission("Assets", "Read")]
+        public async Task<IActionResult> GetFieldValues(
+            [FromQuery] string fieldKey,
+            [FromQuery] string? search,
+            [FromQuery] int? categoryId)
+        {
+            var result = await _assetService.GetFieldValuesAsync(fieldKey, search, categoryId);
+            return Ok(result);
+        }
     }
 }

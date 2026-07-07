@@ -83,12 +83,19 @@ export default function AssetManagement() {
 
   const categoryId = categoryIdFromUrl ? Number(categoryIdFromUrl) : undefined;
 
-
   // Print state — holds all assets fetched for printing
 const [printAssets, setPrintAssets] = useState<AssetListItem[]>([]);
 const [printing, setPrinting]       = useState(false);
 
-// Fetch all assets matching current filter, then trigger print
+  // ShowInTable custom fields for current category
+  const [tableFields, setTableFields] = useState<{ fieldKey: string; fieldLabel: string }[]>([]);
+
+  const [fixedTableFields, setFixedTableFields] = useState<{
+  key: string;
+  label: string;
+  }[]>([]);
+
+  // Fetch all assets matching current filter, then trigger print
 async function handlePrint() {
   setPrinting(true);
   try {
@@ -114,13 +121,36 @@ async function handlePrint() {
     if (!categoryId) {
       setCategoryName('');
       setCategoryIcon('ti-category');
+      setTableFields([]);
       return;
     }
     getCategoryById(categoryId)
       .then(cat => {
         setCategoryName(cat.name);
         setCategoryIcon(cat.icon ?? 'ti-category');
-      })
+        // Custom fields ShowInTable
+      setTableFields(
+        cat.fields
+          .filter(f => f.showInTable)
+          .map(f => ({ fieldKey: f.fieldKey, fieldLabel: f.fieldLabel }))
+      );
+
+      // Fixed fields ShowInTable
+      if (cat.fixedFieldsConfig) {
+        try {
+          const config = JSON.parse(cat.fixedFieldsConfig);
+          const fixed = [];
+          if (config.brandInTable)         fixed.push({ key: 'brand',         label: 'Brand' });
+          if (config.modelInTable)         fixed.push({ key: 'model',         label: 'Model' });
+          if (config.serialNumberInTable)  fixed.push({ key: 'serialNumber',  label: 'Serial No.' });
+          if (config.purchasePriceInTable) fixed.push({ key: 'purchasePrice', label: 'Price' });
+          if (config.warrantyExpiryInTable) fixed.push({ key: 'warrantyExpiry', label: 'Warranty' });
+          setFixedTableFields(fixed);
+        } catch {
+          setFixedTableFields([]);
+        }
+      }
+    })
       .catch(() => setCategoryName(''));
   }, [categoryId]);
 
@@ -415,12 +445,14 @@ async function handlePrint() {
               <th className="sortable" style={{ width: 110 }} onClick={() => handleSort('location')}>
                 <div className="am-th-inner">Location <SortIcon field="location" /></div>
               </th>
-              <th className="sortable" style={{ width: 110 }} onClick={() => handleSort('purchasePrice')}>
-                <div className="am-th-inner">Price <SortIcon field="purchasePrice" /></div>
-              </th>
-              <th className="sortable" style={{ width: 120 }} onClick={() => handleSort('warrantyExpiry')}>
-                <div className="am-th-inner">Warranty <SortIcon field="warrantyExpiry" /></div>
-              </th>
+              {/* Dynamic fixed field columns */}
+{fixedTableFields.map(f => (
+  <th key={f.key} style={{ width: 110 }}>{f.label}</th>
+))}
+              {/* Dynamic custom field columns */}
+            {tableFields.map(f => (
+      <th key={f.fieldKey} style={{ width: 120 }}>{f.fieldLabel}</th>
+    ))}
               <th className="sortable" style={{ width: 140 }} onClick={() => handleSort('status')}>
                 <div className="am-th-inner">Status <SortIcon field="status" /></div>
               </th>
@@ -473,8 +505,23 @@ async function handlePrint() {
                     </td>
                   )}
                   <td>{asset.location ?? '—'}</td>
-                  <td>{formatCurrency((asset as any).purchasePrice)}</td>
-                  <td>{formatDate(asset.warrantyExpiry)}</td>
+{/* Dynamic fixed field values */}
+{fixedTableFields.map(f => (
+  <td key={f.key}>
+    {f.key === 'brand'         ? asset.brand ?? '—'
+    : f.key === 'model'        ? asset.model ?? '—'
+    : f.key === 'serialNumber' ? (asset as any).serialNumber ?? '—'
+    : f.key === 'purchasePrice' ? (asset.purchasePrice ? formatCurrency(asset.purchasePrice) : '—')
+    : f.key === 'warrantyExpiry' ? formatDate(asset.warrantyExpiry)
+    : '—'}
+  </td>
+))}
+                  {/* Dynamic custom field values */}
+    {tableFields.map(f => (
+      <td key={f.fieldKey}>
+        {asset.customFields?.find(cf => cf.fieldKey === f.fieldKey)?.value ?? '—'}
+      </td>
+    ))}
                   <td>
                     <StatusBadge status={asset.status} />
                   </td>

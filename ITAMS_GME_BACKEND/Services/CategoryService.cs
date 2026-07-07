@@ -153,6 +153,7 @@ namespace ITAMS_GME_BACKEND.Services
                         FieldLabel = f.FieldLabel,
                         FieldType = f.FieldType,
                         IsRequired = f.IsRequired,
+                        ShowInTable = f.ShowInTable,
                         DefaultValue = f.DefaultValue,
                         SortOrder = f.SortOrder,
                     })
@@ -199,6 +200,7 @@ namespace ITAMS_GME_BACKEND.Services
                     FieldLabel = f.FieldLabel,
                     FieldType = f.FieldType,
                     IsRequired = f.IsRequired,
+                    ShowInTable = f.ShowInTable,
                     DefaultValue = f.DefaultValue,
                     SortOrder = f.SortOrder == 0 ? index : f.SortOrder,
                     CreatedAt = DateTime.UtcNow,
@@ -256,6 +258,7 @@ namespace ITAMS_GME_BACKEND.Services
                     FieldLabel = f.FieldLabel,
                     FieldType = f.FieldType,
                     IsRequired = f.IsRequired,
+                    ShowInTable = f.ShowInTable,
                     DefaultValue = f.DefaultValue,
                     SortOrder = f.SortOrder == 0 ? index : f.SortOrder,
                     CreatedAt = DateTime.UtcNow,

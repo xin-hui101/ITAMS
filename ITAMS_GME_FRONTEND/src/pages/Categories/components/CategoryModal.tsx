@@ -22,6 +22,7 @@ interface FieldRow {
   fieldLabel: string;
   fieldType:  string;
   isRequired: boolean;
+  showInTable: boolean;
 }
 
 interface FormData {
@@ -44,10 +45,18 @@ const EMPTY_FORM: FormData = {
 };
 
 const DEFAULT_FIXED: FixedFieldsConfig = {
-  serialNumber: false,
-  brand:        false,
-  model:        false,
-  location:     false,
+  serialNumber:         false,
+  serialNumberInTable:  false,
+  brand:                false,
+  brandInTable:         false,
+  model:                false,
+  modelInTable:         false,
+  location:             false,
+  locationInTable:      false,
+  purchasePrice:        false,
+  purchasePriceInTable: false,
+  warrantyExpiry:       false,
+  warrantyExpiryInTable: false,
 };
 
 const FIELD_TYPES = [
@@ -59,10 +68,12 @@ const FIELD_TYPES = [
 
 // Fixed fields definition
 const FIXED_FIELD_DEFS = [
-  { key: 'serialNumber', label: 'Serial Number', icon: 'ti-barcode'   },
-  { key: 'brand',        label: 'Brand',         icon: 'ti-building'  },
-  { key: 'model',        label: 'Model',         icon: 'ti-tag'       },
-  { key: 'location',     label: 'Location',      icon: 'ti-map-pin'   },
+  { key: 'serialNumber', tableKey: 'serialNumberInTable', label: 'Serial Number', icon: 'ti-barcode'  },
+  { key: 'brand',        tableKey: 'brandInTable',        label: 'Brand',         icon: 'ti-building' },
+  { key: 'model',        tableKey: 'modelInTable',        label: 'Model',         icon: 'ti-tag'      },
+  { key: 'location',     tableKey: 'locationInTable',     label: 'Location',      icon: 'ti-map-pin'  },
+  { key: 'purchasePrice',  tableKey: 'purchasePriceInTable',  label: 'Purchase Price', icon: 'ti-currency-dollar' },
+  { key: 'warrantyExpiry', tableKey: 'warrantyExpiryInTable', label: 'Warranty Expiry', icon: 'ti-calendar' },
 ];
 
 export default function CategoryModal({ categoryId, onClose }: Props) {
@@ -93,6 +104,7 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
           fieldLabel: f.fieldLabel,
           fieldType:  f.fieldType,
           isRequired: f.isRequired,
+          showInTable: f.showInTable,
         })));
         if (cat.fixedFieldsConfig) {
           try {
@@ -111,6 +123,7 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
       fieldLabel: '',
       fieldType:  'text',
       isRequired: false,
+      showInTable: false,
     }]);
   }
 
@@ -178,6 +191,7 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
           fieldLabel: f.fieldLabel,
           fieldType:  f.fieldType,
           isRequired: f.isRequired,
+          showInTable: f.showInTable,
           sortOrder:  i,
         })),
     };
@@ -332,24 +346,39 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
 
                   {/* Optional fixed fields — user can set required */}
                   {FIXED_FIELD_DEFS.map(def => (
-                    <div key={def.key} className="cat-fixed-field-row">
-                      <div className="cat-fixed-field-left">
-                        <i className={`ti ${def.icon}`} />
-                        {def.label}
-                      </div>
-                      <label className="cat-fixed-field-required">
-                        <input
-                          type="checkbox"
-                          checked={fixedConfig[def.key as keyof FixedFieldsConfig]}
-                          onChange={e => setFixedConfig(prev => ({
-                            ...prev,
-                            [def.key]: e.target.checked,
-                          }))}
-                        />
-                        Required
-                      </label>
-                    </div>
-                  ))}
+  <div key={def.key} className="cat-fixed-field-row">
+    <div className="cat-fixed-field-left">
+      <i className={`ti ${def.icon}`} />
+      {def.label}
+    </div>
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+      {/* Required checkbox */}
+      <label className="cat-fixed-field-required">
+        <input
+          type="checkbox"
+          checked={fixedConfig[def.key as keyof FixedFieldsConfig]}
+          onChange={e => setFixedConfig(prev => ({
+            ...prev,
+            [def.key]: e.target.checked,
+          }))}
+        />
+        Required
+      </label>
+      {/* Show in table checkbox */}
+      <label className="cat-fixed-field-required">
+        <input
+          type="checkbox"
+          checked={fixedConfig[def.tableKey as keyof FixedFieldsConfig]}
+          onChange={e => setFixedConfig(prev => ({
+            ...prev,
+            [def.tableKey]: e.target.checked,
+          }))}
+        />
+        Table
+      </label>
+    </div>
+  </div>
+))}
 
                 </div>
               </div>
@@ -393,6 +422,17 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
                         />
                         Req
                       </label>
+
+                      {/* Show in table checkbox */}
+                      <label className="cat-field-required">
+                      <input
+                       type="checkbox"
+                        checked={field.showInTable}
+                        onChange={e => updateField(index, 'showInTable', e.target.checked)}
+                      />
+                        Table
+                      </label>
+
                       <button
                         className="cat-btn-remove-field"
                         onClick={() => removeField(index)}
