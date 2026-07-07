@@ -158,7 +158,7 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
     if (apiError) setApiError('');
   }
 
-  // ── Validation ───────────────────────────────────────────────//
+  // ── Validation ───────────────────────────────────────────────//test
   function validate(): boolean {
     const errs: FormErrors = {};
     if (!form.name.trim())
