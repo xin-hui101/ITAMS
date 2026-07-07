@@ -158,16 +158,16 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
     if (apiError) setApiError('');
   }
 
-  // ── Validation ───────────────────────────────────────────────
+  // ── Validation ───────────────────────────────────────────────//test
   function validate(): boolean {
     const errs: FormErrors = {};
     if (!form.name.trim())
       errs.name = 'Category name is required.';
     if (!form.assetPrefix.trim()) {
       errs.assetPrefix = 'Asset prefix is required.';
-    } else if (!/^[A-Za-z0-9]+-\d+$/.test(form.assetPrefix.trim())) {
-      errs.assetPrefix = 'Format must be like NF-000 or LAP-0000.';
-    }
+    } else if (!/^[A-Za-z0-9]+-[A-Za-z]*\d+$/.test(form.assetPrefix.trim())) {
+  errs.assetPrefix = 'Format must end with numbers. e.g. NF-000, GME-SL0000';
+  }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   }

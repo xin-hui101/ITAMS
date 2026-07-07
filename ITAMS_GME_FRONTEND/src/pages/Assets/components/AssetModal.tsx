@@ -59,10 +59,18 @@ const EMPTY_FORM: FormData = {
 };
 
 const DEFAULT_FIXED: FixedFieldsConfig = {
-  serialNumber: false,
-  brand:        false,
-  model:        false,
-  location:     false,
+  serialNumber:          false,
+  serialNumberInTable:   false,
+  brand:                 false,
+  brandInTable:          false,
+  model:                 false,
+  modelInTable:          false,
+  location:              false,
+  locationInTable:       false,
+  purchasePrice:         false,
+  purchasePriceInTable:  false,
+  warrantyExpiry:        false,
+  warrantyExpiryInTable: false,
 };
 
 export default function AssetModal({ assetId, defaultCategoryId, onClose }: Props) {

@@ -32,7 +32,7 @@ export default function Topbar({ collapsed }: { collapsed: boolean }) {
     return () => clearInterval(timer);
   }, []);
 
-  const current = ROUTE_CONFIG[location.pathname] ?? ROUTE_CONFIG['/dashboard'];
+  const current = ROUTE_CONFIG[location.pathname] ?? ROUTE_CONFIG['/db'];
 
   return (
     <header className={`topbar ${collapsed ? 'collapsed' : ''}`}>

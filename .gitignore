@@ -10,6 +10,7 @@ obj/
 
 # Sensitive config files — never commit these
 **/appsettings.Production.json
+**/appsettings.Development.json
 **/appsettings.Staging.json
 
 # ─── Entity Framework ─────────────────────────────────────────
