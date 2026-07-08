@@ -438,18 +438,16 @@ async function handlePrint() {
         <table className="am-table">
           <thead>
             <tr>
-              {showNameInTable && (
-                <th className="sortable" style={{ minWidth: 200 }} onClick={() => handleSort('name')}>
-                  <div className="am-th-inner">Name <SortIcon field="name" /></div>
-                </th>
-              )}
+              
               <th className="sortable" style={{ minWidth: 110, width: 110 }} onClick={() => handleSort('assetTag')}>
                 <div className="am-th-inner">Asset ID <SortIcon field="assetTag" /></div>
               </th>
               
-              <th className="sortable" style={{ minWidth: 200 }} onClick={() => handleSort('name')}>
-                <div className="am-th-inner">Name <SortIcon field="name" /></div>
-              </th>
+             {showNameInTable && (
+                <th className="sortable" style={{ minWidth: 200 }} onClick={() => handleSort('name')}>
+                  <div className="am-th-inner">Name <SortIcon field="name" /></div>
+                </th>
+              )}
               
               {!categoryId && <th style={{ minWidth: 120, width: 120 }}>Category</th>}
               
