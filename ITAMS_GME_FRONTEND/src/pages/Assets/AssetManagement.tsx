@@ -434,29 +434,35 @@ async function handlePrint() {
         <table className="am-table">
           <thead>
             <tr>
-              <th className="sortable" style={{ width: 110 }} onClick={() => handleSort('assetTag')}>
+              <th className="sortable" style={{ minWidth: 110, width: 110 }} onClick={() => handleSort('assetTag')}>
                 <div className="am-th-inner">Asset ID <SortIcon field="assetTag" /></div>
               </th>
-              <th className="sortable" onClick={() => handleSort('name')}>
+              
+              <th className="sortable" style={{ minWidth: 200 }} onClick={() => handleSort('name')}>
                 <div className="am-th-inner">Name <SortIcon field="name" /></div>
               </th>
-              {/* Category column hidden when already filtered to one category */}
-              {!categoryId && <th style={{ width: 120 }}>Category</th>}
-              <th className="sortable" style={{ width: 110 }} onClick={() => handleSort('location')}>
+              
+              {!categoryId && <th style={{ minWidth: 120, width: 120 }}>Category</th>}
+              
+              <th className="sortable" style={{ minWidth: 110, width: 110 }} onClick={() => handleSort('location')}>
                 <div className="am-th-inner">Location <SortIcon field="location" /></div>
               </th>
+              
               {/* Dynamic fixed field columns */}
-{fixedTableFields.map(f => (
-  <th key={f.key} style={{ width: 110 }}>{f.label}</th>
-))}
-              {/* Dynamic custom field columns */}
-            {tableFields.map(f => (
-      <th key={f.fieldKey} style={{ width: 120 }}>{f.fieldLabel}</th>
-    ))}
-              <th className="sortable" style={{ width: 140 }} onClick={() => handleSort('status')}>
+              {fixedTableFields.map(f => (
+                <th key={f.key} style={{ minWidth: 130 }}>{f.label}</th>
+              ))}
+              
+              {/* Dynamic custom field columns: */}
+              {tableFields.map(f => (
+                <th key={f.fieldKey} style={{ minWidth: 150 }}>{f.fieldLabel}</th>
+              ))}
+              
+              <th className="sortable" style={{ minWidth: 140, width: 140 }} onClick={() => handleSort('status')}>
                 <div className="am-th-inner">Status <SortIcon field="status" /></div>
               </th>
-              <th style={{ width: 100 }}>Actions</th>
+              
+              <th style={{ minWidth: 100, width: 100 }}>Actions</th>
             </tr>
           </thead>
           <tbody>

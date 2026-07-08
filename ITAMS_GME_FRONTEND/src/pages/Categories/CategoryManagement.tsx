@@ -20,6 +20,7 @@ function countFixedFields(config?: string): number {
     if (parsed.brand)        count++;
     if (parsed.model)        count++;
     if (parsed.location)     count++;
+    if (parsed.purchaseDate) count++;
   } catch {}
   return count;
 }

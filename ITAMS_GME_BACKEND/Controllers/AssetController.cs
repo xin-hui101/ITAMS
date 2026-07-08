@@ -61,8 +61,7 @@ namespace ITAMS_GME_BACKEND.Controllers
         [RequirePermission("Assets", "Create")]
         public async Task<IActionResult> CreateAsset([FromBody] CreateAssetDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                return BadRequest(new { message = "Asset name is required." });
+
 
             if (dto.CategoryId == 0)
                 return BadRequest(new { message = "Category is required." });

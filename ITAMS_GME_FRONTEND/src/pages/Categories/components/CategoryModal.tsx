@@ -45,6 +45,8 @@ const EMPTY_FORM: FormData = {
 };
 
 const DEFAULT_FIXED: FixedFieldsConfig = {
+  name:                 false,
+  nameInTable:          false,
   serialNumber:         false,
   serialNumberInTable:  false,
   brand:                false,
@@ -57,6 +59,8 @@ const DEFAULT_FIXED: FixedFieldsConfig = {
   purchasePriceInTable: false,
   warrantyExpiry:       false,
   warrantyExpiryInTable: false,
+  purchaseDate:         false,
+  purchaseDateInTable:  false,
 };
 
 const FIELD_TYPES = [
@@ -74,6 +78,7 @@ const FIXED_FIELD_DEFS = [
   { key: 'location',     tableKey: 'locationInTable',     label: 'Location',      icon: 'ti-map-pin'  },
   { key: 'purchasePrice',  tableKey: 'purchasePriceInTable',  label: 'Purchase Price', icon: 'ti-currency-dollar' },
   { key: 'warrantyExpiry', tableKey: 'warrantyExpiryInTable', label: 'Warranty Expiry', icon: 'ti-calendar' },
+  { key: 'purchaseDate', tableKey: 'purchaseDateInTable', label: 'Purchase Date', icon: 'ti-calendar-event' }
 ];
 
 export default function CategoryModal({ categoryId, onClose }: Props) {
@@ -334,7 +339,30 @@ export default function CategoryModal({ categoryId, onClose }: Props) {
                       <i className="ti ti-forms" />
                       Name
                     </div>
-                    <span className="cat-fixed-field-locked">Always Required</span>
+                    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                    <label className="cat-fixed-field-required">
+        <input
+          type="checkbox"
+          checked={fixedConfig.name ?? false}
+          onChange={e => setFixedConfig(prev => ({
+            ...prev,
+            name: e.target.checked,
+          }))}
+        />
+        Required
+      </label>
+      <label className="cat-fixed-field-required">
+        <input
+          type="checkbox"
+          checked={fixedConfig.nameInTable ?? false}
+          onChange={e => setFixedConfig(prev => ({
+            ...prev,
+            nameInTable: e.target.checked,
+          }))}
+        />
+        Table
+      </label>
+                    </div>  
                   </div>
                   <div className="cat-fixed-field-row">
                     <div className="cat-fixed-field-left">

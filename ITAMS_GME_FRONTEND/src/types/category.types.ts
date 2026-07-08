@@ -42,6 +42,8 @@ export interface CategoryField {
 
 // ── Fixed Fields Config ───────────────────────────────────────
 export interface FixedFieldsConfig {
+  name:                 boolean;
+  nameInTable:          boolean;
   serialNumber:        boolean;
   serialNumberInTable: boolean;
   brand:               boolean;
@@ -54,6 +56,8 @@ export interface FixedFieldsConfig {
   purchasePriceInTable: boolean;
   warrantyExpiry:      boolean;
   warrantyExpiryInTable: boolean;
+  purchaseDate?:       boolean;
+  purchaseDateInTable?: boolean;
 }
 
 // ── Create Category ───────────────────────────────────────────

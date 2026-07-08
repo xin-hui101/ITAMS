@@ -59,6 +59,8 @@ const EMPTY_FORM: FormData = {
 };
 
 const DEFAULT_FIXED: FixedFieldsConfig = {
+  name:                 false,
+  nameInTable:          false,
   serialNumber:          false,
   serialNumberInTable:   false,
   brand:                 false,
@@ -192,7 +194,6 @@ const [form, setForm] = useState<FormData>({
   function validate(): boolean {
     const errs: FormErrors = {};
     if (!form.categoryId)      errs.categoryId   = 'Category is required.';
-    if (!form.name.trim())     errs.name         = 'Asset name is required.';
     if (!form.status)          errs.status       = 'Status is required.';
 
     // Validate required fixed fields based on category config
@@ -367,7 +368,7 @@ function renderFieldInput(field: CategoryField) {
                 {/* Name */}
                 <div className="am-form-field">
                   <label className="am-form-label">
-                    Name <span>*</span>
+                    Name 
                   </label>
                   <AutocompleteInput
     fieldKey="name"
@@ -489,7 +490,7 @@ function renderFieldInput(field: CategoryField) {
 
                 {/* Purchase Date */}
                 <div className="am-form-field">
-                  <label className="am-form-label">Purchase Date</label>
+                  <label className="am-form-label">Purchase Date (DOP)</label>
                   <input
                     className="am-form-input"
                     name="purchaseDate"
