@@ -5,7 +5,7 @@
     {
         public int Id { get; set; }
         public string AssetTag { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
         public string Category { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public string Status { get; set; } = string.Empty;
@@ -24,7 +24,7 @@
     {
         public int Id { get; set; }
         public string AssetTag { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public string Category { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
@@ -57,7 +57,7 @@
     public class CreateAssetDto
     {
         public int CategoryId { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
         public string Status { get; set; } = "Active";
         public string? SerialNumber { get; set; }
         public string? Brand { get; set; }
@@ -73,7 +73,7 @@
     // ── Update ────────────────────────────────────────────────────
     public class UpdateAssetDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public string? SerialNumber { get; set; }
         public string? Brand { get; set; }
