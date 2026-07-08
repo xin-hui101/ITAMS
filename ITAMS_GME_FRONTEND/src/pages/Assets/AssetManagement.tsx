@@ -95,6 +95,8 @@ const [printing, setPrinting]       = useState(false);
   label: string;
   }[]>([]);
 
+  const [showNameInTable, setShowNameInTable] = useState<boolean>(true);
+
   // Fetch all assets matching current filter, then trigger print
 async function handlePrint() {
   setPrinting(true);
@@ -139,6 +141,7 @@ async function handlePrint() {
       if (cat.fixedFieldsConfig) {
         try {
           const config = JSON.parse(cat.fixedFieldsConfig);
+          setShowNameInTable(config.nameInTable ?? true);
           const fixed = [];
           if (config.brandInTable)         fixed.push({ key: 'brand',         label: 'Brand' });
           if (config.modelInTable)         fixed.push({ key: 'model',         label: 'Model' });
@@ -148,6 +151,7 @@ async function handlePrint() {
           setFixedTableFields(fixed);
         } catch {
           setFixedTableFields([]);
+          setShowNameInTable(true);
         }
       }
     })
@@ -434,6 +438,11 @@ async function handlePrint() {
         <table className="am-table">
           <thead>
             <tr>
+              {showNameInTable && (
+                <th className="sortable" style={{ minWidth: 200 }} onClick={() => handleSort('name')}>
+                  <div className="am-th-inner">Name <SortIcon field="name" /></div>
+                </th>
+              )}
               <th className="sortable" style={{ minWidth: 110, width: 110 }} onClick={() => handleSort('assetTag')}>
                 <div className="am-th-inner">Asset ID <SortIcon field="assetTag" /></div>
               </th>
@@ -495,9 +504,10 @@ async function handlePrint() {
                   <td>
                     <span className="am-asset-tag">{asset.assetTag}</span>
                   </td>
+                  {showNameInTable && (
                   <td>
                     <div className="am-name-cell">
-                      <span className="am-name">{asset.name}</span>
+                      <span className="am-name">{asset.name || asset.brand || asset.assetTag}</span>
                       {(asset.brand || asset.model) && (
                         <span className="am-sub">
                           {[asset.brand, asset.model].filter(Boolean).join(' · ')}
@@ -505,6 +515,7 @@ async function handlePrint() {
                       )}
                     </div>
                   </td>
+                  )}
                   {!categoryId && (
                     <td>
                       <span className="am-badge-category">{asset.category}</span>
