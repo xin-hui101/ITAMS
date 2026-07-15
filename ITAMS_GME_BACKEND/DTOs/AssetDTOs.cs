@@ -9,6 +9,7 @@
         public string Category { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public string Status { get; set; } = string.Empty;
+        public string? SerialNumber { get; set; }
         public string? Brand { get; set; }
         public string? Model { get; set; }
         public string? Location { get; set; }
@@ -104,6 +105,8 @@
         public string? Status { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        public string? SortField { get; set; }
+        public string? SortOrder { get; set; }
     }
 
     // ── Stats ─────────────────────────────────────────────────────

@@ -22,18 +22,20 @@ namespace ITAMS_GME_BACKEND.Services
         // ── Get All Assets (paginated + search + filter) ──────────
         public async Task<PaginatedResult<AssetListDto>> GetAssetsAsync(AssetQueryDto query)
         {
-            var q = _db.Assets
-                .Include(a => a.Category)
-                .Include(a => a.AssetFieldValues)
-                    .ThenInclude(fv => fv.CategoryField)
-                .AsQueryable();
+
+            // 临时加在 var q = 之后
+var testAssets = await _db.Assets
+    .Where(a => a.CategoryId == 24)
+    .Select(a => new { a.Id, a.AssetTag, a.Status })
+    .ToListAsync();
+            var q = _db.Assets.AsNoTracking().AsQueryable();
 
             // Search by name, asset tag, brand, model
             if (!string.IsNullOrWhiteSpace(query.Search))
             {
                 var search = query.Search.ToLower();
                 q = q.Where(a =>
-                    a.Name.ToLower().Contains(search) ||
+                    (a.Name != null && a.Name.ToLower().Contains(search)) ||
                     a.AssetTag.ToLower().Contains(search) ||
                     (a.Brand != null && a.Brand.ToLower().Contains(search)) ||
                     (a.Model != null && a.Model.ToLower().Contains(search))
@@ -50,40 +52,75 @@ namespace ITAMS_GME_BACKEND.Services
 
             var total = await q.CountAsync();
 
-            var assets = await q
-                .OrderByDescending(a => a.CreatedAt)
+            // Step 1: Load assets (no Include)
+            var orderedQ = query.SortField switch
+            {
+                "assetTag" => query.SortOrder == "asc" ? q.OrderBy(a => a.AssetTag) : q.OrderByDescending(a => a.AssetTag),
+                "name" => query.SortOrder == "asc" ? q.OrderBy(a => a.Name) : q.OrderByDescending(a => a.Name),
+                "status" => query.SortOrder == "asc" ? q.OrderBy(a => a.Status) : q.OrderByDescending(a => a.Status),
+                "location" => query.SortOrder == "asc" ? q.OrderBy(a => a.Location) : q.OrderByDescending(a => a.Location),
+                "warrantyExpiry" => query.SortOrder == "asc" ? q.OrderBy(a => a.WarrantyExpiry) : q.OrderByDescending(a => a.WarrantyExpiry),
+                "purchasePrice" => query.SortOrder == "asc" ? q.OrderBy(a => a.PurchasePrice) : q.OrderByDescending(a => a.PurchasePrice),
+                _ => q.OrderByDescending(a => a.CreatedAt),
+            };
+
+            var rawAssets = await orderedQ
                 .Skip((query.Page - 1) * query.PageSize)
                 .Take(query.PageSize)
-                .Select(a => new AssetListDto
-                {
-                    Id = a.Id,
-                    AssetTag = a.AssetTag,
-                    Name = a.Name,
-                    Category = a.Category.Name,
-                    CategoryId = a.CategoryId,
-                    Status = a.Status,
-                    Brand = a.Brand,
-                    Model = a.Model,
-                    Location = a.Location,
-                    PurchasePrice = a.PurchasePrice,
-                    PurchaseDate = a.PurchaseDate,
-                    WarrantyExpiry = a.WarrantyExpiry,
-                    CreatedAt = a.CreatedAt,
-                    // Only include custom fields marked ShowInTable
-                    CustomFields = a.AssetFieldValues
-            .Where(fv => fv.CategoryField.ShowInTable)
-            .Select(fv => new AssetTableFieldDto
-            {
-                FieldKey = fv.CategoryField.FieldKey,
-                FieldLabel = fv.CategoryField.FieldLabel,
-                Value = fv.ValueText
-                          ?? (fv.ValueNumber.HasValue ? fv.ValueNumber.Value.ToString() : null)
-                          ?? (fv.ValueDate.HasValue ? fv.ValueDate.Value.ToString("dd MMM yyyy") : null)
-                          ?? "—",
-            })
-            .ToList(),
-                })
                 .ToListAsync();
+
+            // Step 2: Load categories manually
+            var categoryIds = rawAssets.Select(a => a.CategoryId).Distinct().ToList();
+            var categories = await _db.Categories
+                .Where(c => categoryIds.Contains(c.Id))
+                .ToDictionaryAsync(c => c.Id);
+
+            // Step 3: Load asset field values manually
+            var assetIds = rawAssets.Select(a => a.Id).ToList();
+            var fieldValues = await _db.AssetFieldValues
+                .Where(fv => assetIds.Contains(fv.AssetId))
+                .ToListAsync();
+
+            // Step 4: Load category fields manually
+            var cfIds = fieldValues.Select(fv => fv.CategoryFieldId).Distinct().ToList();
+            var categoryFields = cfIds.Any()
+                ? await _db.CategoryFields
+                    .Where(cf => cfIds.Contains(cf.Id))
+                    .ToDictionaryAsync(cf => cf.Id)
+                : new Dictionary<int, CategoryField>();
+
+            // Step 5: Map to DTOs in memory
+            var assets = rawAssets.Select(a => new AssetListDto
+            {
+                Id = a.Id,
+                AssetTag = a.AssetTag,
+                Name = a.Name,
+                Category = categories.ContainsKey(a.CategoryId) ? categories[a.CategoryId].Name : "",
+                CategoryId = a.CategoryId,
+                Status = a.Status,
+                SerialNumber = a.SerialNumber,  
+                Brand = a.Brand,
+                Model = a.Model,
+                Location = a.Location,
+                PurchasePrice = a.PurchasePrice,
+                PurchaseDate = a.PurchaseDate,
+                WarrantyExpiry = a.WarrantyExpiry,
+                CreatedAt = a.CreatedAt,
+                CustomFields = fieldValues
+                    .Where(fv => fv.AssetId == a.Id
+                              && categoryFields.ContainsKey(fv.CategoryFieldId)
+                              && categoryFields[fv.CategoryFieldId].ShowInTable)
+                    .Select(fv => new AssetTableFieldDto
+                    {
+                        FieldKey = categoryFields[fv.CategoryFieldId].FieldKey,
+                        FieldLabel = categoryFields[fv.CategoryFieldId].FieldLabel,
+                        Value = fv.ValueText
+                                  ?? fv.ValueNumber?.ToString()
+                                  ?? fv.ValueDate?.ToString("dd MMM yyyy")
+                                  ?? "—",
+                    })
+                    .ToList(),
+            }).ToList();
 
             return new PaginatedResult<AssetListDto>
             {
@@ -110,7 +147,6 @@ namespace ITAMS_GME_BACKEND.Services
             var maintenanceCount = await assetsQuery.CountAsync(a => a.Status == "Under Maintenance");
             var disposeCount = await assetsQuery.CountAsync(a => a.Status == "Dispose");
 
-            // Sum of purchase price across all matched assets
             var totalValue = await assetsQuery.SumAsync(a => a.PurchasePrice ?? 0);
 
             var totalCategories = categoryId.HasValue
@@ -128,7 +164,6 @@ namespace ITAMS_GME_BACKEND.Services
                 TotalValue = totalValue,
             };
         }
-
 
         // ── Get Asset Detail ──────────────────────────────────────
         public async Task<AssetDetailDto?> GetAssetByIdAsync(int id)
@@ -160,6 +195,7 @@ namespace ITAMS_GME_BACKEND.Services
                 CreatedAt = asset.CreatedAt,
                 UpdatedAt = asset.UpdatedAt,
                 CustomFields = asset.AssetFieldValues
+                    .Where(afv => afv.CategoryField != null)
                     .OrderBy(afv => afv.CategoryField.SortOrder)
                     .Select(afv => new AssetFieldValueDto
                     {
@@ -177,16 +213,14 @@ namespace ITAMS_GME_BACKEND.Services
 
         // ── Get distinct field values for autocomplete ────────────────
         public async Task<List<string>> GetFieldValuesAsync(
-    string fieldKey, string? search, int? categoryId)
+            string fieldKey, string? search, int? categoryId)
         {
             IQueryable<string?> query;
 
-            // Fixed fields — filter by category if provided
             if (fieldKey is "name" or "brand" or "model" or "location" or "serialNumber")
             {
                 var assetsQuery = _db.Assets.AsQueryable();
 
-                // Filter by category
                 if (categoryId.HasValue)
                     assetsQuery = assetsQuery.Where(a => a.CategoryId == categoryId.Value);
 
@@ -202,7 +236,6 @@ namespace ITAMS_GME_BACKEND.Services
             }
             else
             {
-                // Custom fields — always filter by fieldKey and category
                 var customQuery = _db.AssetFieldValues
                     .Where(fv => fv.CategoryField.FieldKey == fieldKey);
 
@@ -212,7 +245,6 @@ namespace ITAMS_GME_BACKEND.Services
                 query = customQuery.Select(fv => fv.ValueText);
             }
 
-            // Search filter
             if (!string.IsNullOrWhiteSpace(search))
                 query = query.Where(v => v != null && v.ToLower().Contains(search.ToLower()));
 
@@ -228,10 +260,8 @@ namespace ITAMS_GME_BACKEND.Services
         // ── Create Asset ──────────────────────────────────────────
         public async Task<AssetDetailDto> CreateAssetAsync(CreateAssetDto dto, int createdByUserId)
         {
-            // Auto generate asset tag from category prefix
             var assetTag = await _categoryService.GenerateNextAssetIdAsync(dto.CategoryId);
 
-            // Check duplicate serial number
             if (!string.IsNullOrWhiteSpace(dto.SerialNumber) &&
                 await _db.Assets.AnyAsync(a => a.SerialNumber == dto.SerialNumber))
             {
@@ -259,7 +289,6 @@ namespace ITAMS_GME_BACKEND.Services
             _db.Assets.Add(asset);
             await _db.SaveChangesAsync();
 
-            // Save custom field values
             if (dto.CustomFields.Any())
             {
                 var fieldValues = dto.CustomFields
@@ -277,7 +306,6 @@ namespace ITAMS_GME_BACKEND.Services
 
                 _db.AssetFieldValues.AddRange(fieldValues);
 
-                // Save JSON cache for quick display
                 asset.CustomFieldsJson = JsonSerializer.Serialize(
                     dto.CustomFields.ToDictionary(f => f.FieldKey, f =>
                         f.ValueText ?? f.ValueNumber?.ToString() ?? f.ValueDate?.ToString("yyyy-MM-dd"))
@@ -286,7 +314,6 @@ namespace ITAMS_GME_BACKEND.Services
                 await _db.SaveChangesAsync();
             }
 
-            // Log create action — records who created the asset and basic info
             await _auditLog.LogCreateAsync(
                 createdByUserId, "Assets", "Asset", asset.Id,
                 new { asset.AssetTag, asset.Name, asset.Status });
@@ -303,17 +330,14 @@ namespace ITAMS_GME_BACKEND.Services
 
             if (asset == null) return null;
 
-            // Check duplicate serial number — exclude current
             if (!string.IsNullOrWhiteSpace(dto.SerialNumber) &&
                 await _db.Assets.AnyAsync(a => a.SerialNumber == dto.SerialNumber && a.Id != id))
             {
                 throw new InvalidOperationException("Serial number already exists.");
             }
 
-            // Save old values before updating — for audit log comparison
             var oldValues = new { asset.Name, asset.Status, asset.Location };
 
-            // Update fields
             asset.Name = dto.Name;
             asset.Status = dto.Status;
             asset.SerialNumber = dto.SerialNumber;
@@ -326,7 +350,6 @@ namespace ITAMS_GME_BACKEND.Services
             asset.Notes = dto.Notes;
             asset.UpdatedAt = DateTime.UtcNow;
 
-            // Replace custom field values
             _db.AssetFieldValues.RemoveRange(asset.AssetFieldValues);
 
             if (dto.CustomFields.Any())
@@ -346,7 +369,6 @@ namespace ITAMS_GME_BACKEND.Services
 
                 _db.AssetFieldValues.AddRange(fieldValues);
 
-                // Update JSON cache
                 asset.CustomFieldsJson = JsonSerializer.Serialize(
                     dto.CustomFields.ToDictionary(f => f.FieldKey, f =>
                         f.ValueText ?? f.ValueNumber?.ToString() ?? f.ValueDate?.ToString("yyyy-MM-dd"))
@@ -359,7 +381,6 @@ namespace ITAMS_GME_BACKEND.Services
 
             await _db.SaveChangesAsync();
 
-            // Log update action — records old and new values for comparison
             await _auditLog.LogUpdateAsync(
                 updatedByUserId, "Assets", "Asset", id,
                 oldValues,
@@ -377,18 +398,15 @@ namespace ITAMS_GME_BACKEND.Services
 
             if (asset == null) return false;
 
-            // Cannot delete if has maintenance records
             if (asset.MaintenanceRecords.Any())
                 throw new InvalidOperationException(
                     "Cannot delete asset that has maintenance records.");
 
-            // Save old values before deleting — for audit log record
             var oldValues = new { asset.AssetTag, asset.Name, asset.Status };
 
             _db.Assets.Remove(asset);
             await _db.SaveChangesAsync();
 
-            // Log delete action — records what was deleted and by whom
             await _auditLog.LogDeleteAsync(
                 deletedByUserId, "Assets", "Asset", id, oldValues);
 

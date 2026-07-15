@@ -16,11 +16,13 @@ export async function getAssets(
 ): Promise<PaginatedResult<AssetListItem>> {
   const params = new URLSearchParams();
 
-  if (query.search)              params.append('search',     query.search);
-  if (query.status)              params.append('status',     query.status);
-  if (query.categoryId) params.append('categoryId', String(query.categoryId));
-  params.append('page',     String(query.page));
-  params.append('pageSize', String(query.pageSize));
+  if (query.search)     params.append('search',     query.search);
+if (query.status)     params.append('status',     query.status);
+if (query.categoryId) params.append('categoryId', String(query.categoryId));
+params.append('page',     String(query.page));
+params.append('pageSize', String(query.pageSize));
+if (query.sortField)  params.append('sortField',  query.sortField);
+if (query.sortOrder)  params.append('sortOrder',  query.sortOrder);
 
   const response = await api.get<PaginatedResult<AssetListItem>>(
     `/assets?${params.toString()}`
@@ -73,4 +75,12 @@ export async function deleteAsset(id: number): Promise<void> {
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Failed to delete asset.');
   }
+}
+
+// GET /api/assets/next-tag?categoryId=xx — preview next asset tag
+export async function getNextAssetTag(categoryId: number): Promise<string> {
+  const response = await api.get<{ assetTag: string }>(
+    `/assets/next-tag?categoryId=${categoryId}`
+  );
+  return response.data.assetTag;
 }

@@ -8,10 +8,11 @@ import type {
 } from '../../../types/asset.types';
 import { ASSET_STATUSES } from '../../../types/asset.types';
 import type { CategoryField, FixedFieldsConfig } from '../../../types/category.types';
-import { getAssetById, createAsset, updateAsset } from '../../../services/assetService';
+import { getAssetById, createAsset, updateAsset, getNextAssetTag } from '../../../services/assetService';
 import { getAllCategories } from '../../../services/categoryService';
 import { getCategoryById } from '../../../services/categoryService';
 import type { CategoryListItem } from '../../../types/category.types';
+
 import './AssetModal.css';
 
 interface Props {
@@ -105,7 +106,7 @@ const [form, setForm] = useState<FormData>({
       .then((asset: AssetDetail) => {
         setForm({
           categoryId:     String(asset.categoryId),
-          name:           asset.name,
+          name:           asset.name ?? '',
           status:         asset.status,
           serialNumber:   asset.serialNumber ?? '',
           brand:          asset.brand ?? '',
@@ -153,8 +154,10 @@ const [form, setForm] = useState<FormData>({
         }
 
         if (!isEdit) {
-          setPreviewTag(`${cat.assetPrefix.replace(/\d+$/, '')}???`);
-        }
+  getNextAssetTag(Number(form.categoryId))
+    .then(tag => setPreviewTag(tag))
+    .catch(() => setPreviewTag(`${cat.assetPrefix.replace(/\d+$/, '')}???`));
+}
       })
       .catch(() => {});
   }, [form.categoryId, isEdit]);
@@ -219,7 +222,7 @@ const [form, setForm] = useState<FormData>({
     try {
       if (isEdit) {
         const payload: UpdateAssetPayload = {
-          name:           form.name,
+          name: form.name || undefined,
           status:         form.status as any,
           serialNumber:   form.serialNumber || undefined,
           brand:          form.brand || undefined,
@@ -235,7 +238,7 @@ const [form, setForm] = useState<FormData>({
       } else {
         const payload: CreateAssetPayload = {
           categoryId:     Number(form.categoryId),
-          name:           form.name,
+          name: form.name || undefined,
           status:         form.status as any,
           serialNumber:   form.serialNumber || undefined,
           brand:          form.brand || undefined,

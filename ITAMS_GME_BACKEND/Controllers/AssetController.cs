@@ -13,10 +13,12 @@ namespace ITAMS_GME_BACKEND.Controllers
     public class AssetController : ControllerBase
     {
         private readonly AssetService _assetService;
+        private readonly CategoryService _categoryService;
 
-        public AssetController(AssetService assetService)
+        public AssetController(AssetService assetService, CategoryService categoryService)
         {
             _assetService = assetService;
+            _categoryService = categoryService;
         }
 
         // Helper — get current logged in user ID from JWT token
@@ -82,8 +84,7 @@ namespace ITAMS_GME_BACKEND.Controllers
         [RequirePermission("Assets", "Update")]
         public async Task<IActionResult> UpdateAsset(int id, [FromBody] UpdateAssetDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                return BadRequest(new { message = "Asset name is required." });
+
 
             try
             {
@@ -118,6 +119,22 @@ namespace ITAMS_GME_BACKEND.Controllers
             }
         }
 
+        // GET api/assets/next-tag?categoryId=20
+        [HttpGet("next-tag")]
+        [RequirePermission("Assets", "Read")]
+        public async Task<IActionResult> GetNextTag([FromQuery] int categoryId)
+        {
+            try
+            {
+                var tag = await _categoryService.GenerateNextAssetIdAsync(categoryId);
+                return Ok(new { assetTag = tag });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         // GET api/assets/field-values?fieldKey=brand&search=mic
         // Returns distinct values for autocomplete suggestions
         [HttpGet("field-values")]
@@ -130,5 +147,7 @@ namespace ITAMS_GME_BACKEND.Controllers
             var result = await _assetService.GetFieldValuesAsync(fieldKey, search, categoryId);
             return Ok(result);
         }
+
+
     }
 }

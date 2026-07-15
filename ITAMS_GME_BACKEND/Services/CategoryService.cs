@@ -246,25 +246,53 @@ namespace ITAMS_GME_BACKEND.Services
             category.Icon = dto.Icon;
             category.FixedFieldsConfig = dto.FixedFieldsConfig;
 
-            // Replace all custom fields
-            _db.CategoryFields.RemoveRange(category.CategoryFields);
+            // Diff update custom fields — preserve existing AssetFieldValues
+            var existingFields = category.CategoryFields.ToList();
+            var newFieldKeys = dto.Fields.Select(f => f.FieldKey).ToList();
 
-            if (dto.Fields.Any())
+            // Only remove fields that are no longer in the new config
+            var fieldsToRemove = existingFields
+                .Where(f => !newFieldKeys.Contains(f.FieldKey))
+                .ToList();
+
+            if (fieldsToRemove.Any())
             {
-                var fields = dto.Fields.Select((f, index) => new CategoryField
-                {
-                    CategoryId = category.Id,
-                    FieldKey = f.FieldKey,
-                    FieldLabel = f.FieldLabel,
-                    FieldType = f.FieldType,
-                    IsRequired = f.IsRequired,
-                    ShowInTable = f.ShowInTable,
-                    DefaultValue = f.DefaultValue,
-                    SortOrder = f.SortOrder == 0 ? index : f.SortOrder,
-                    CreatedAt = DateTime.UtcNow,
-                }).ToList();
+                var fieldIdsToRemove = fieldsToRemove.Select(f => f.Id).ToList();
+                var orphanedValues = await _db.AssetFieldValues
+                    .Where(v => fieldIdsToRemove.Contains(v.CategoryFieldId))
+                    .ToListAsync();
+                _db.AssetFieldValues.RemoveRange(orphanedValues);
+                _db.CategoryFields.RemoveRange(fieldsToRemove);
+            }
 
-                _db.CategoryFields.AddRange(fields);
+            // Update existing fields or add new ones
+            foreach (var dtoField in dto.Fields.Select((f, i) => (f, i)))
+            {
+                var existing = existingFields.FirstOrDefault(f => f.FieldKey == dtoField.f.FieldKey);
+                if (existing != null)
+                {
+                    existing.FieldLabel = dtoField.f.FieldLabel;
+                    existing.FieldType = dtoField.f.FieldType;
+                    existing.IsRequired = dtoField.f.IsRequired;
+                    existing.ShowInTable = dtoField.f.ShowInTable;
+                    existing.DefaultValue = dtoField.f.DefaultValue;
+                    existing.SortOrder = dtoField.f.SortOrder == 0 ? dtoField.i : dtoField.f.SortOrder;
+                }
+                else
+                {
+                    _db.CategoryFields.Add(new CategoryField
+                    {
+                        CategoryId = category.Id,
+                        FieldKey = dtoField.f.FieldKey,
+                        FieldLabel = dtoField.f.FieldLabel,
+                        FieldType = dtoField.f.FieldType,
+                        IsRequired = dtoField.f.IsRequired,
+                        ShowInTable = dtoField.f.ShowInTable,
+                        DefaultValue = dtoField.f.DefaultValue,
+                        SortOrder = dtoField.f.SortOrder == 0 ? dtoField.i : dtoField.f.SortOrder,
+                        CreatedAt = DateTime.UtcNow,
+                    });
+                }
             }
 
             await _db.SaveChangesAsync();

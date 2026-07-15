@@ -4,6 +4,7 @@ export const ASSET_STATUSES = [
   'Inactive',
   'Under Maintenance',
   'Dispose',
+  'Fault',
 ] as const;
 
 export type AssetStatus = typeof ASSET_STATUSES[number];
@@ -20,6 +21,7 @@ export interface AssetListItem {
   model?: string;
   location?: string;
   purchasePrice?: number;
+  purchaseDate?: string;
   warrantyExpiry?: string;
   createdAt: string;
   customFields?: { fieldKey: string; fieldLabel: string; value: string }[];  // ← 加这行
@@ -29,7 +31,7 @@ export interface AssetListItem {
 export interface AssetDetail {
   id: number;
   assetTag: string;
-  name: string;
+  name: string | null;
   categoryId: number;
   category: string;
   status: AssetStatus;
@@ -60,7 +62,7 @@ export interface AssetFieldValue {
 // ── Create Asset ──────────────────────────────────────────────
 export interface CreateAssetPayload {
   categoryId: number;
-  name: string;
+  name?: string;
   status: AssetStatus;
   serialNumber?: string;
   brand?: string;
@@ -75,7 +77,7 @@ export interface CreateAssetPayload {
 
 // ── Update Asset ──────────────────────────────────────────────
 export interface UpdateAssetPayload {
-  name: string;
+  name?: string;
   status: AssetStatus;
   serialNumber?: string;
   brand?: string;
@@ -104,6 +106,8 @@ export interface AssetQuery {
   categoryId?: number;
   page: number;
   pageSize: number;
+  sortField?: string;
+  sortOrder?: string;
 }
 
 // ── Asset Stats ───────────────────────────────────────────────
