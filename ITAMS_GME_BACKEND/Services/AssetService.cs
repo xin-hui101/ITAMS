@@ -23,11 +23,6 @@ namespace ITAMS_GME_BACKEND.Services
         public async Task<PaginatedResult<AssetListDto>> GetAssetsAsync(AssetQueryDto query)
         {
 
-            // 临时加在 var q = 之后
-var testAssets = await _db.Assets
-    .Where(a => a.CategoryId == 24)
-    .Select(a => new { a.Id, a.AssetTag, a.Status })
-    .ToListAsync();
             var q = _db.Assets.AsNoTracking().AsQueryable();
 
             // Search by name, asset tag, brand, model
